@@ -5,7 +5,7 @@
 	<head>
 	
 		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
-		<meta name="description" content="Pacman game written in HTML5 + CSS3 + jQuery. This WebApp is a Responsive Web Design (RWD) website." />
+		<meta name="description" content="Pac-Man game written in HTML5 + CSS3 + jQuery with Canvas. This WebApp is a Responsive Web Design (RWD) website." />
 		<meta name="keywords" content="pacman, pac-man, pac-man online, pacman online, online, online games, games, free, puzzle, lucio panepinto, lucio, panepinto, html, html5, css, css3, javascript, jquery, rwd, responsive, responsive web design, responsive web, web design, canvas, draw" />
 
 		<link rel="stylesheet" type="text/css" href="css/pacman.css" />
@@ -15,6 +15,7 @@
 		<script type="text/javascript" src="js/paths.js"></script>
 		<script type="text/javascript" src="js/bubbles.js"></script>
 		<script type="text/javascript" src="js/pacman.js"></script>
+		<script type="text/javascript" src="js/ghosts.js"></script>
 		
 		<script type="text/javascript">		
 			
@@ -43,6 +44,9 @@
 				
 				initPacman();
 				drawPacman();
+				
+				initGhosts();
+				drawGhosts();
 				
 				$("body").keyup(function(e) { 
 					KEYDOWN = false;
@@ -90,6 +94,10 @@
 				<canvas id="canvas-paths"></canvas>
 				<canvas id="canvas-bubbles"></canvas>
 				<canvas id="canvas-pacman"></canvas>
+				<canvas id="canvas-ghost-blinky"></canvas>
+				<canvas id="canvas-ghost-pinky"></canvas>
+				<canvas id="canvas-ghost-inky"></canvas>
+				<canvas id="canvas-ghost-clyde"></canvas>
 			</div>
 		</div>
 	

@@ -47,7 +47,7 @@ body {
 	background-color: #000;
 	border: solid 1px #333;
 }			
-#board, #canvas-paths, #canvas-pacman, #canvas-bubbles { 
+#board, #canvas-paths, #canvas-pacman, #canvas-bubbles, #canvas-ghost-blinky, #canvas-ghost-pinky, #canvas-ghost-inky, #canvas-ghost-clyde { 
 	width: 550px;
 	height: 550px;
 	position: absolute;

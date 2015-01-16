@@ -211,10 +211,12 @@ function testBubblesPacman() {
 		
 		//console.log("PACMAN EAT BUBBLE > TEST : " + positionX + "," + positionY + " / " + PACMAN_POSITION_X + "," + PACMAN_POSITION_Y);
 		
-		if (eat === "1") { 
+		if (eat === "0") { 
 			if (positionX <= PACMAN_POSITION_X + PACMAN_EAT_GAP && positionX >= PACMAN_POSITION_X - PACMAN_EAT_GAP && positionY <= PACMAN_POSITION_Y + PACMAN_EAT_GAP && positionY >= PACMAN_POSITION_Y - PACMAN_EAT_GAP ) { 
 				eraseBubble(positionX, positionY);
-				//console.log("PACMAN EAT BUBBLE : " + line + ";" + bubble);
+				BUBBLES[i] = b.substr(0, b.length - 1) + "1";
+				//console.log("PACMAN EAT BUBBLE : " + BUBBLES[i]);
+				return;
 			}
 		}
 	}
