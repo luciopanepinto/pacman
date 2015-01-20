@@ -17,6 +17,8 @@ function initPaths() {
 	PATHS.push("186,204-362,204");
 	PATHS.push("186,310-362,310");
 	PATHS.push("30,522-518,522");
+	PATHS.push("238,258-314,258");
+	PATHS.push("276,204-276,258");
 	
 	// LEFT
 	PATHS.push("128,26-128,470");

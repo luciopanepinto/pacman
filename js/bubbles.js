@@ -7,6 +7,12 @@ var BUBBLES_Y_START = 26;
 var BUBBLES_Y_END = 522;
 var BUBBLES_SIZE = 3;
 
+var SUPER_BUBBLES_SIZE = 8;
+var SUPER_BUBBLES_BLINK = false;
+var SUPER_BUBBLES_BLINK_STATE = 0;
+var SUPER_BUBBLES_BLINK_TIMER = -1;
+var SUPER_BUBBLES_BLINK_SPEED = 250;
+
 function initBubbles() { 
 	var canvas = document.getElementById('canvas-bubbles');
 	canvas.setAttribute('width', '550');
@@ -28,34 +34,102 @@ function drawBubbles() {
 		var y = getYFromLine(line);
 		for (var x = BUBBLES_X_START, xmax = BUBBLES_X_END, bubble = 1 ; x < xmax; bubble ++, x += BUBBLES_GAP) { 
 			if (canAddBubble(line, bubble)) { 
+				var type = "";
+				var size = "";
+				if (isSuperBubble(line, bubble)) { 
+					type = "s";
+					size = SUPER_BUBBLES_SIZE;
+				} else { 
+					type = "b";
+					size = BUBBLES_SIZE;
+				}
 				ctx.beginPath();
-				ctx.arc(x, y, BUBBLES_SIZE, 0, 2 * Math.PI, false);
+				ctx.arc(x, y, size, 0, 2 * Math.PI, false);
 				ctx.fill();
 				ctx.closePath();
 				
-				BUBBLES[i] = line + ";" + bubble + ";" + x + "," + y + ";0";
-				console.log(BUBBLES[i]);
+				BUBBLES[i] = line + ";" + bubble + ";" + x + "," + y + ";" + type + ";0"
 				i ++;
 			}
 		}
 	}
 }
 
-function eraseBubble(x, y) { 
+function stopBlinkSuperBubbles() { 
+	clearInterval(SUPER_BUBBLES_BLINK_TIMER);
+	SUPER_BUBBLES_BLINK_TIMER = -1;
+	SUPER_BUBBLES_BLINK = false;
+}
+
+function blinkSuperBubbles() { 
+	if (SUPER_BUBBLES_BLINK === false) { 
+		SUPER_BUBBLES_BLINK = true;
+		SUPER_BUBBLES_BLINK_TIMER = setInterval('blinkSuperBubbles()', SUPER_BUBBLES_BLINK_SPEED);
+	} else { 
+		
+		if (SUPER_BUBBLES_BLINK_STATE === 0) { 
+			SUPER_BUBBLES_BLINK_STATE = 1;
+		} else { 
+			SUPER_BUBBLES_BLINK_STATE = 0;
+		}
+		
+		for (var i = 0, imax = BUBBLES.length; i < imax; i ++) { 
+			var b = BUBBLES[i];
+			
+			var line = b.split(";")[0];
+			var bubble = b.split(";")[1];
+			var x = parseInt(b.split(";")[2].split(",")[0]);
+			var y = parseInt(b.split(";")[2].split(",")[1]);
+			var type = b.split(";")[3];
+			var eat = b.split(";")[4];
+			
+			if (type === "s" && eat === "0") { 
+				
+					if (SUPER_BUBBLES_BLINK_STATE === 1) { 
+						eraseBubble("s", x, y);
+					} else { 
+						var ctx = getBubblesCanevasContext();
+						ctx.fillStyle = "#dca5be";
+						ctx.beginPath();
+						ctx.arc(x, y, SUPER_BUBBLES_SIZE, 0, 2 * Math.PI, false);
+						ctx.fill();
+						ctx.closePath();
+					}
+
+			}
+		}
+	}
+}
+
+function eraseBubble(t, x, y) { 
 
 	var ctx = getBubblesCanevasContext();
 	
 	ctx.save();
 	ctx.globalCompositeOperation = "destination-out";
 
+	var size = "";
+	if (t === "s") { 
+		size = SUPER_BUBBLES_SIZE;
+	} else { 
+		size = BUBBLES_SIZE;
+	}
+	
 	ctx.beginPath();
-	ctx.arc(x, y, BUBBLES_SIZE + 1, 0, 2 * Math.PI, false);
+	ctx.arc(x, y, size + 2, 0, 2 * Math.PI, false);
 	ctx.fill();
 	ctx.closePath();
 	
 	ctx.restore();
 }
 
+function isSuperBubble(line, bubble) { 
+	if ( (line === 23 || line === 4) && (bubble === 1 || bubble === 26)) { 
+		return true;
+	}
+	
+	return false;
+}
 
 function canAddBubble(line, bubble) { 
 	
@@ -94,7 +168,6 @@ function canAddBubble(line, bubble) {
 	} else if ( (line >= 27 && line <= 28) && ( (bubble >= 2 && bubble <= 11) || (bubble >= 16 && bubble <= 25) ) ) { 
 		return false;
 	}
-	
 	
 	return true;
 }
