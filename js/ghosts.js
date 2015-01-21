@@ -181,7 +181,7 @@ function cancelAffraidGhost(ghost) {
 }
 
 function startEatGhost(ghost) { 
-	PACMAN_LOCK = true;
+	LOCK = true;
 	
 	if ( eval('GHOST_' + ghost.toUpperCase() + '_AFFRAID_TIMER !== null') ) { 
 		eval('GHOST_' + ghost.toUpperCase() + '_AFFRAID_TIMER.cancel()');
@@ -206,7 +206,7 @@ function eatGhost(ghost) {
 	}
 	resumeGhosts();
 	resumePacman();
-	PACMAN_LOCK = false;
+	LOCK = false;
 }
 function cancelEatGhost(ghost) { 
 	if (eval('GHOST_' + ghost.toUpperCase() + '_STATE === -1')) { 
@@ -288,10 +288,97 @@ function moveGhost(ghost) {
 
 function changeDirection(ghost) { 
 	eval('var direction = GHOST_' + ghost.toUpperCase() + '_DIRECTION');
+	eval('var state = GHOST_' + ghost.toUpperCase() + '_STATE');
+	eval('var ghostX = GHOST_' + ghost.toUpperCase() + '_POSITION_X');
+	eval('var ghostY = GHOST_' + ghost.toUpperCase() + '_POSITION_Y');
+	
 	var tryDirection = oneDirection();
-	if (canMoveGhost(ghost, tryDirection) && (direction != tryDirection -2 && direction != tryDirection +2)) { 
+	
+	if (state === 0 || state === 1) { 
+		if (ghostX != 276 && ghostY != 258) { 
+			var pacmanX = PACMAN_POSITION_X;
+			var pacmanY = PACMAN_POSITION_Y;
+			if (ghost === "blinky") { 
+				var axe = oneAxe();
+				tryDirection = getRightDirection(axe, ghostX, ghostY, pacmanX, pacmanY);
+			} else if (ghost === "pinky") { 
+				var nothing = whatsYourProblem();
+				if (nothing < 4) { 
+					tryDirection = reverseDirection(getRightDirection(axe, ghostX, ghostY, pacmanX, pacmanY));
+				}
+			} else if (ghost === "inky") { 
+				var good = anyGoodIdea();
+				if (good < 3) { 
+					tryDirection = getRightDirection(axe, ghostX, ghostY, pacmanX, pacmanY);
+				}
+			}
+		}
+		if (state === 1) { 
+			tryDirection = reverseDirection(tryDirection);
+		}
+	} else { 
+		//if (ghostX != 276 && ghostY != 258) { 
+			var axe = oneAxe();
+			tryDirection = getRightDirectionForHome(axe, ghostX, ghostY);
+			if (canMoveGhost(ghost, tryDirection) && (direction != tryDirection -2 && direction != tryDirection + 2)) { 
+			
+			} else { 
+				axe ++;
+				if (axe > 2) axe = 1; 
+				tryDirection = getRightDirectionForHome(axe, ghostX, ghostY);
+			}
+		//} else { 
+			//tryDirection = oneDirectionX();
+		//}
+	}
+	
+	if (canMoveGhost(ghost, tryDirection) && (direction != tryDirection -2 && direction != tryDirection + 2)) { 
 		eval('GHOST_' + ghost.toUpperCase() + '_DIRECTION = tryDirection');
 	}
+}
+
+function getRightDirectionForHome(axe, ghostX, ghostY) { 
+	var homeX = 276;
+	var homeY = 204;
+	
+	if (ghostY === 204 && ghostX === 276) { 	
+		return 2;
+	} else if (ghostX === 276 && ghostY === 258) { 
+		return oneDirectionX();
+	} else { 
+		if (axe === 1) { 
+			if (ghostX > homeX) { 
+			 return 3;
+			} else { 
+				return 1;
+			}
+		} else { 
+			if (ghostY > homeY) { 
+			 return 4;
+			} else { 
+				return 2;
+			}
+		}
+	}
+}
+function getRightDirection(axe, ghostX, ghostY, pacmanX, pacmanY) { 
+	if (axe === 1) { 
+		if (ghostX > pacmanX) { 
+		 return 3;
+		} else { 
+			return 1;
+		}
+	} else { 
+		if (ghostY > pacmanY) { 
+		 return 4;
+		} else { 
+			return 2;
+		}
+	}
+}
+function reverseDirection(direction) { 
+	if (direction > 2) return direction - 2;
+	else return direction + 2;
 }
 
 function eraseGhost(ghost) { 
@@ -322,6 +409,9 @@ function canMoveGhost(ghost, direction) {
 	}
 	eval('var positionX = GHOST_' + ghost.toUpperCase() + '_POSITION_X');
 	eval('var positionY = GHOST_' + ghost.toUpperCase() + '_POSITION_Y');
+	eval('var state = GHOST_' + ghost.toUpperCase() + '_STATE');
+	
+	if (positionX === 276 && positionY === 204 && direction === 2 && state === 0) return false;
 
 	if ( direction === 1 ) { 
 		positionX += GHOST_POSITION_STEP;
@@ -352,6 +442,25 @@ function canMoveGhost(ghost, direction) {
 
 function oneDirection() { 
 	return Math.floor( Math.random() * ( 4 - 1 + 1 ) + 1 );
+}
+function oneDirectionX() { 
+	var direction = oneDirection();
+	if (direction === 4 || direction === 2) direction -= 1;
+	return direction;
+}
+function oneDirectionY() { 
+	var direction = oneDirection();
+	if (direction === 3 || direction === 1) direction -= 1;
+	return direction;
+}
+function oneAxe() { 
+	return Math.floor( Math.random() * ( 2 - 1 + 1 ) + 1 );
+}
+function anyGoodIdea() { 
+	return Math.floor( Math.random() * ( 4 - 1 + 1 ) + 1 );
+}
+function whatsYourProblem() { 
+	return Math.floor( Math.random() * ( 6 - 1 + 1 ) + 1 );
 }
 
 function stopGhost(ghost) { 

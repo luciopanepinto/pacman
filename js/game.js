@@ -8,6 +8,7 @@ var SCORE_BUBBLE = 10;
 var SCORE_SUPER_BUBBLE = 50;
 var SCORE_GHOST_COMBO = 200;
 
+var LIFE_BONUS = false;
 var LIFES = 2;
 
 function initGame() { 
@@ -27,6 +28,7 @@ function initGame() {
 	moveGhosts();
 	
 	lifes();
+	LIFE_BONUS = false;
 }
 
 function pauseGame() { 
@@ -85,8 +87,9 @@ function score(s, g) {
 		HIGHSCORE = SCORE;
 		$('#highscore span').html(HIGHSCORE);
 	}
-	if (SCORE >= 10000) { 
+	if (SCORE >= 10000 && !LIFE_BONUS) { 
 		lifes(+1);
+		LIFE_BONUS = true;
 	}
 	
 	if (g) { 

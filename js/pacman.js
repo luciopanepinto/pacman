@@ -160,6 +160,8 @@ function canMovePacman(direction) {
 	var positionX = PACMAN_POSITION_X;
 	var positionY = PACMAN_POSITION_Y;
 	
+	if (positionX === 276 && positionY === 204 && direction === 2) return false;
+	
 	if ( direction === 1 ) { 
 		positionX += PACMAN_POSITION_STEP;
 	} else if ( direction === 2 ) { 
