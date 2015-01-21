@@ -35,6 +35,46 @@ body {
 	position: relative;
 }
 
+
+#score, #highscore  { 
+	position: absolute;
+	display: inline;
+	border: solid 0px red;
+	top: 70px;
+	margin: 0px;
+	padding: 0px;
+	width: 160px;
+}
+#highscore { 
+	left: 180px;
+}
+#score h2, #score span, #highscore h2, #highscore span { 
+	display: block;
+	text-transform: uppercase;
+	font-weight: normal;
+	letter-spacing: 2px;
+	font-size: 16px;
+	height: 21px;
+	margin: 0px;
+	padding: 0px;
+	text-align: right;
+	padding-right: 15px;
+}
+#score span, #highscore span { 
+	padding-right: 0px;
+}
+#highscore span { 
+	padding-right: 40px;
+}
+
+span.combo { 
+	position: absolute;
+	letter-spacing: 1.5px;
+	font-size: 14px;
+	color: #89dfff;
+	font-weight: normal;
+}
+
 #panel { 
 	width: 550px;
 	height: 690px;
@@ -64,9 +104,17 @@ body {
 	background-color: transparent;
 }
 
+#canvas-lifes { 
+	width: 100px;
+	height: 30px;
+	top: 670px;
+	left: 50px;
+	position: absolute;
+}
+
 
 h1, h1 em { 
-	margin: 0px 0px 30px 0px;
+	margin: 0px 0px 50px 0px;
 	padding: 0px;
 	font-size: 38px;
 	letter-spacing: 3px;

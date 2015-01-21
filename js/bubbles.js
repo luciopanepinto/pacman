@@ -105,8 +105,8 @@ function eraseBubble(t, x, y) {
 
 	var ctx = getBubblesCanevasContext();
 	
-	ctx.save();
-	ctx.globalCompositeOperation = "destination-out";
+	//ctx.save();
+	//ctx.globalCompositeOperation = "destination-out";
 
 	var size = "";
 	if (t === "s") { 
@@ -115,12 +115,12 @@ function eraseBubble(t, x, y) {
 		size = BUBBLES_SIZE;
 	}
 	
-	ctx.beginPath();
-	ctx.arc(x, y, size + 2, 0, 2 * Math.PI, false);
-	ctx.fill();
-	ctx.closePath();
+	//ctx.beginPath();
+	ctx.clearRect(x - size, y - size, (size + 1) * 2, (size + 1) * 2);
+	//ctx.fill();
+	//ctx.closePath();
 	
-	ctx.restore();
+	//ctx.restore();
 }
 
 function isSuperBubble(line, bubble) { 

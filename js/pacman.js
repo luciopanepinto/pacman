@@ -17,7 +17,6 @@ var PACMAN_GHOST_GAP = 20;
 var PACMAN_KILLING_TIMER = -1;
 var PACMAN_KILLING_SPEED = 100;
 var PACMAN_DEAD = false;
-var PACMAN_LOCK = false;
 
 function initPacman() { 
 	var canvas = document.getElementById('canvas-pacman');
@@ -226,19 +225,19 @@ function erasePacman() {
 
 	var ctx = getPacmanCanevasContext();
 	
-	ctx.save();
-	ctx.globalCompositeOperation = "destination-out";
+	//ctx.save();
+	///ctx.globalCompositeOperation = "destination-out";
 
-	ctx.beginPath();
-	ctx.arc(PACMAN_POSITION_X, PACMAN_POSITION_Y, PACMAN_SIZE + 1, 0, 2 * Math.PI, false);
-	ctx.fill();
-	ctx.closePath();
+	//ctx.beginPath();
+	ctx.clearRect(PACMAN_POSITION_X - PACMAN_SIZE, PACMAN_POSITION_Y - PACMAN_SIZE, PACMAN_SIZE * 2, PACMAN_SIZE * 2);
+	//ctx.fill();
+	//ctx.closePath();
 	
-	ctx.restore();
+	//ctx.restore();
 }
 
 function killPacman() { 
-	PACMAN_LOCK = true;
+	LOCK = true;
 	PACMAN_DEAD = true;
 	stopPacman();
 	stopGhosts();
@@ -254,7 +253,12 @@ function killingPacman() {
 		clearInterval(PACMAN_KILLING_TIMER);
 		PACMAN_KILLING_TIMER = -1;
 		erasePacman();
-		PACMAN_LOCK = false;
+		if (LIFES > 0) { 
+			lifes(-1);
+			LOCK = false;
+		} else { 
+			gameover();
+		}
 	}
 }
 
@@ -295,7 +299,10 @@ function testBubblesPacman() {
 				eraseBubble(type, positionX, positionY);
 				BUBBLES[i] = b.substr(0, b.length - 1) + "1";
 				if (type === "s") { 
+					score(SCORE_BUBBLE);
 					affraidGhosts();
+				} else { 
+					score(SCORE_SUPER_BUBBLE);
 				}
 				return;
 			}
