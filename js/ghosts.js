@@ -53,11 +53,11 @@ var GHOST_CLYDE_AFFRAID_STATE = 0;
 var GHOST_AFFRAID_COLOR = "#2d3eff";
 var GHOST_AFFRAID_FINISH_COLOR = "#fff";
 var GHOST_POSITION_STEP = 2;
-var GHOST_MOVING_SPEED = 19;
+var GHOST_MOVING_SPEED = 15;
 var GHOST_AFFRAID_MOVING_SPEED = 44;
-var GHOST_EAT_MOVING_SPEED = 10;
-var GHOST_AFFRAID_TIME = 9000;
-var GHOST_EAT_TIME = 7500;
+var GHOST_EAT_MOVING_SPEED = 6;
+var GHOST_AFFRAID_TIME = 8500;
+var GHOST_EAT_TIME = 5500;
 var GHOST_BODY_STATE_MAX = 6;
 
 function initGhosts() { 
@@ -171,7 +171,6 @@ function affraidGhost(ghost) {
 }
 function cancelAffraidGhost(ghost) { 
 	if (eval('GHOST_' + ghost.toUpperCase() + '_STATE === 1')) { 
-	console.log("destroy TIMER");
 		eval('GHOST_' + ghost.toUpperCase() + '_AFFRAID_TIMER.cancel()');
 		eval('GHOST_' + ghost.toUpperCase() + '_AFFRAID_TIMER = null');
 		stopGhost(ghost);
@@ -298,18 +297,42 @@ function changeDirection(ghost) {
 		if (ghostX != 276 && ghostY != 258) { 
 			var pacmanX = PACMAN_POSITION_X;
 			var pacmanY = PACMAN_POSITION_Y;
+			var axe = oneAxe();
 			if (ghost === "blinky") { 
-				var axe = oneAxe();
-				tryDirection = getRightDirection(axe, ghostX, ghostY, pacmanX, pacmanY);
-			} else if (ghost === "pinky") { 
+			
 				var nothing = whatsYourProblem();
-				if (nothing < 4) { 
-					tryDirection = reverseDirection(getRightDirection(axe, ghostX, ghostY, pacmanX, pacmanY));
+				if (nothing < 6) { 
+					tryDirection = getRightDirection(axe, ghostX, ghostY, pacmanX, pacmanY);
+					if ( !(canMoveGhost(ghost, tryDirection) && (direction != tryDirection -2 && direction != tryDirection + 2)) ) { 
+						axe ++;
+						if (axe > 2) axe = 1; 
+						tryDirection = getRightDirection(axe, ghostX, ghostY, pacmanX, pacmanY);
+					}
 				}
+				
+			} else if (ghost === "pinky") { 
+			
+				var nothing = whatsYourProblem();
+				if (nothing < 3) { 
+				
+					tryDirection = getRightDirection(axe, ghostX, ghostY, pacmanX, pacmanY);
+					if ( !(canMoveGhost(ghost, tryDirection) && (direction != tryDirection -2 && direction != tryDirection + 2)) ) { 
+						axe ++;
+						if (axe > 2) axe = 1; 
+						tryDirection = getRightDirection(axe, ghostX, ghostY, pacmanX, pacmanY);
+					}
+					tryDirection = reverseDirection(tryDirection);
+				}
+				
 			} else if (ghost === "inky") { 
 				var good = anyGoodIdea();
 				if (good < 3) { 
 					tryDirection = getRightDirection(axe, ghostX, ghostY, pacmanX, pacmanY);
+					if ( !(canMoveGhost(ghost, tryDirection) && (direction != tryDirection -2 && direction != tryDirection + 2)) ) { 
+						axe ++;
+						if (axe > 2) axe = 1; 
+						tryDirection = getRightDirection(axe, ghostX, ghostY, pacmanX, pacmanY);
+					}
 				}
 			}
 		}
@@ -317,19 +340,15 @@ function changeDirection(ghost) {
 			tryDirection = reverseDirection(tryDirection);
 		}
 	} else { 
-		//if (ghostX != 276 && ghostY != 258) { 
-			var axe = oneAxe();
+		var axe = oneAxe();
+		tryDirection = getRightDirectionForHome(axe, ghostX, ghostY);
+		if (canMoveGhost(ghost, tryDirection) && (direction != tryDirection -2 && direction != tryDirection + 2)) { 
+		
+		} else { 
+			axe ++;
+			if (axe > 2) axe = 1; 
 			tryDirection = getRightDirectionForHome(axe, ghostX, ghostY);
-			if (canMoveGhost(ghost, tryDirection) && (direction != tryDirection -2 && direction != tryDirection + 2)) { 
-			
-			} else { 
-				axe ++;
-				if (axe > 2) axe = 1; 
-				tryDirection = getRightDirectionForHome(axe, ghostX, ghostY);
-			}
-		//} else { 
-			//tryDirection = oneDirectionX();
-		//}
+		}
 	}
 	
 	if (canMoveGhost(ghost, tryDirection) && (direction != tryDirection -2 && direction != tryDirection + 2)) { 
@@ -452,15 +471,6 @@ function oneDirectionY() {
 	var direction = oneDirection();
 	if (direction === 3 || direction === 1) direction -= 1;
 	return direction;
-}
-function oneAxe() { 
-	return Math.floor( Math.random() * ( 2 - 1 + 1 ) + 1 );
-}
-function anyGoodIdea() { 
-	return Math.floor( Math.random() * ( 4 - 1 + 1 ) + 1 );
-}
-function whatsYourProblem() { 
-	return Math.floor( Math.random() * ( 6 - 1 + 1 ) + 1 );
 }
 
 function stopGhost(ghost) { 

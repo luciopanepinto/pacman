@@ -6,6 +6,7 @@ var BUBBLES_GAP = ((BUBBLES_X_END - BUBBLES_X_START) / 25);
 var BUBBLES_Y_START = 26;
 var BUBBLES_Y_END = 522;
 var BUBBLES_SIZE = 3;
+var BUBBLES_COUNTER = 0;
 
 var SUPER_BUBBLES_SIZE = 8;
 var SUPER_BUBBLES_BLINK = false;
@@ -14,6 +15,8 @@ var SUPER_BUBBLES_BLINK_TIMER = -1;
 var SUPER_BUBBLES_BLINK_SPEED = 250;
 
 function initBubbles() { 
+	BUBBLES_COUNTER = 0;
+
 	var canvas = document.getElementById('canvas-bubbles');
 	canvas.setAttribute('width', '550');
 	canvas.setAttribute('height', '550');
@@ -43,6 +46,7 @@ function drawBubbles() {
 					type = "b";
 					size = BUBBLES_SIZE;
 				}
+				BUBBLES_COUNTER ++;
 				ctx.beginPath();
 				ctx.arc(x, y, size, 0, 2 * Math.PI, false);
 				ctx.fill();

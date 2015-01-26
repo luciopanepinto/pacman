@@ -10,10 +10,11 @@ var PACMAN_MOUNTH_STATE_MAX = 6;
 var PACMAN_SIZE = 16;
 var PACMAN_MOVING = false;
 var PACMAN_MOVING_TIMER = -1;
-var PACMAN_MOVING_SPEED = 20;
+var PACMAN_MOVING_SPEED = 15;
 var PACMAN_CANVAS_CONTEXT = null;
 var PACMAN_EAT_GAP = 10;
-var PACMAN_GHOST_GAP = 20;
+var PACMAN_GHOST_GAP = 17;
+var PACMAN_FRUITS_GAP = 15;
 var PACMAN_KILLING_TIMER = -1;
 var PACMAN_KILLING_SPEED = 100;
 var PACMAN_DEAD = false;
@@ -95,6 +96,7 @@ function movePacman(direction) {
 	}
 	
 	var directionTry = direction;
+	var quarterChangeDirection = false;
 	
 	if (!directionTry && PACMAN_DIRECTION_TRY != -1) { 
 		directionTry = PACMAN_DIRECTION_TRY;
@@ -104,6 +106,9 @@ function movePacman(direction) {
 	
 		if (directionTry) { 
 			if (canMovePacman(directionTry)) { 
+				if (PACMAN_DIRECTION + 1 === directionTry || PACMAN_DIRECTION - 1 === directionTry || PACMAN_DIRECTION + 1 === directionTry || (PACMAN_DIRECTION === 4 && directionTry === 1) || (PACMAN_DIRECTION === 1 && directionTry === 4) ) { 
+					quarterChangeDirection = true;
+				}
 				PACMAN_DIRECTION = directionTry;
 				tryMovePacmanCancel();
 			} else { 
@@ -125,14 +130,19 @@ function movePacman(direction) {
 				PACMAN_MOUNTH_STATE = 0; 
 			}
 						
+			var speedUp = 0;
+			if (quarterChangeDirection) { 
+				speedUp = 8;
+			}
+			
 			if ( PACMAN_DIRECTION === 1 ) { 
-				PACMAN_POSITION_X += PACMAN_POSITION_STEP;
+				PACMAN_POSITION_X += PACMAN_POSITION_STEP + speedUp;
 			} else if ( PACMAN_DIRECTION === 2 ) { 
-				PACMAN_POSITION_Y += PACMAN_POSITION_STEP;
+				PACMAN_POSITION_Y += PACMAN_POSITION_STEP + speedUp;
 			} else if ( PACMAN_DIRECTION === 3 ) { 
-				PACMAN_POSITION_X -= PACMAN_POSITION_STEP;
+				PACMAN_POSITION_X -= PACMAN_POSITION_STEP + speedUp;
 			} else if ( PACMAN_DIRECTION === 4 ) { 
-				PACMAN_POSITION_Y -= PACMAN_POSITION_STEP;
+				PACMAN_POSITION_Y -= (PACMAN_POSITION_STEP + speedUp);
 			}
 			
 			if ( PACMAN_POSITION_X === 2 && PACMAN_POSITION_Y === 258 ) { 
@@ -147,6 +157,7 @@ function movePacman(direction) {
 			
 			testBubblesPacman();
 			testGhostsPacman();
+			testFruitsPacman();
 		} else { 
 			stopPacman();
 		}
@@ -228,7 +239,7 @@ function erasePacman() {
 	var ctx = getPacmanCanevasContext();
 	
 	//ctx.save();
-	///ctx.globalCompositeOperation = "destination-out";
+	//ctx.globalCompositeOperation = "destination-out";
 
 	//ctx.beginPath();
 	ctx.clearRect(PACMAN_POSITION_X - PACMAN_SIZE, PACMAN_POSITION_Y - PACMAN_SIZE, PACMAN_SIZE * 2, PACMAN_SIZE * 2);
@@ -243,6 +254,7 @@ function killPacman() {
 	PACMAN_DEAD = true;
 	stopPacman();
 	stopGhosts();
+	pauseTimes();
 	stopBlinkSuperBubbles();
 	PACMAN_KILLING_TIMER = setInterval('killingPacman()', PACMAN_KILLING_SPEED);
 }
@@ -257,7 +269,7 @@ function killingPacman() {
 		erasePacman();
 		if (LIFES > 0) { 
 			lifes(-1);
-			LOCK = false;
+			retry();
 		} else { 
 			gameover();
 		}
@@ -284,7 +296,14 @@ function testGhostPacman(ghost) {
 		}
 	}
 }
-
+function testFruitsPacman() { 
+	
+	if (FRUIT_CANCEL_TIMER != null) { 
+		if (FRUITS_POSITION_X <= PACMAN_POSITION_X + PACMAN_FRUITS_GAP && FRUITS_POSITION_X >= PACMAN_POSITION_X - PACMAN_FRUITS_GAP && FRUITS_POSITION_Y <= PACMAN_POSITION_Y + PACMAN_FRUITS_GAP && FRUITS_POSITION_Y >= PACMAN_POSITION_Y - PACMAN_FRUITS_GAP ) { 
+			eatFruit();
+		}
+	}
+}
 function testBubblesPacman() { 
 	for (var i = 0, imax = BUBBLES.length; i < imax; i ++) { 
 		var b = BUBBLES[i];
@@ -301,10 +320,14 @@ function testBubblesPacman() {
 				eraseBubble(type, positionX, positionY);
 				BUBBLES[i] = b.substr(0, b.length - 1) + "1";
 				if (type === "s") { 
-					score(SCORE_BUBBLE);
+					score(SCORE_SUPER_BUBBLE);
 					affraidGhosts();
 				} else { 
-					score(SCORE_SUPER_BUBBLE);
+					score(SCORE_BUBBLE);
+				}
+				BUBBLES_COUNTER --;
+				if (BUBBLES_COUNTER === 0) { 
+					win();
 				}
 				return;
 			}

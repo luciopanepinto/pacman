@@ -14,8 +14,10 @@
 		<script type="text/javascript" src="js/jquery-mobile.js"></script>
 		<script type="text/javascript" src="js/game.js"></script>
 		<script type="text/javascript" src="js/tools.js"></script>
+		<script type="text/javascript" src="js/board.js"></script>
 		<script type="text/javascript" src="js/paths.js"></script>
 		<script type="text/javascript" src="js/bubbles.js"></script>
+		<script type="text/javascript" src="js/fruits.js"></script>
 		<script type="text/javascript" src="js/pacman.js"></script>
 		<script type="text/javascript" src="js/ghosts.js"></script>
 		
@@ -83,8 +85,10 @@
 			<div id="score"><h2>1UP</h2><span>00</span></div>
 			<div id="highscore"><h2>High Score</h2><span>00</span></div>
 			<div id="board">
+				<canvas id="canvas-board"></canvas>
 				<canvas id="canvas-paths"></canvas>
 				<canvas id="canvas-bubbles"></canvas>
+				<canvas id="canvas-fruits"></canvas>
 				<canvas id="canvas-pacman"></canvas>
 				<canvas id="canvas-ghost-blinky"></canvas>
 				<canvas id="canvas-ghost-pinky"></canvas>
@@ -92,6 +96,8 @@
 				<canvas id="canvas-ghost-clyde"></canvas>
 			</div>
 			<canvas id="canvas-lifes"></canvas>
+			<canvas id="canvas-level-fruits"></canvas>
+			<div id="message"></div>
 		</div>
 	
 	</body>

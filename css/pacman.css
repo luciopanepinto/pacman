@@ -39,7 +39,6 @@ body {
 #score, #highscore  { 
 	position: absolute;
 	display: inline;
-	border: solid 0px red;
 	top: 70px;
 	margin: 0px;
 	padding: 0px;
@@ -66,8 +65,27 @@ body {
 #highscore span { 
 	padding-right: 40px;
 }
+#message { 
+	position: absolute;
+	display: inline;
+	top: 413px;
+	left: 180px;
+	margin: 0px;
+	padding: 0px;
+	width: 210px;
+	height: 30px;
+	text-transform: uppercase;
+	font-weight: normal;
+	letter-spacing: 2px;
+	font-size: 20px;
+	color: #fff200;
+	text-align: center;
+}
+#message.red { 
+	color: red;
+}
 
-span.combo { 
+span.combo, span.fruits { 
 	position: absolute;
 	letter-spacing: 1.5px;
 	font-size: 14px;
@@ -85,9 +103,8 @@ span.combo {
 	position: absolute;
 	padding: 5px 10px 10px 10px;
 	background-color: #000;
-	border: solid 1px #333;
 }			
-#board, #canvas-paths, #canvas-pacman, #canvas-bubbles, #canvas-ghost-blinky, #canvas-ghost-pinky, #canvas-ghost-inky, #canvas-ghost-clyde { 
+#board, #canvas-board, #canvas-paths, #canvas-fruits, #canvas-pacman, #canvas-bubbles, #canvas-ghost-blinky, #canvas-ghost-pinky, #canvas-ghost-inky, #canvas-ghost-clyde { 
 	width: 550px;
 	height: 550px;
 	position: absolute;
@@ -97,19 +114,20 @@ span.combo {
 }
 #board {  
 	position: relative;
-	border: solid 0px #fff;
-	background-image: url('../img/board.png');
-	background-repeat: no-repeat;
-	background-size: 550px 550px;
-	background-color: transparent;
 }
 
-#canvas-lifes { 
-	width: 100px;
+#canvas-lifes, #canvas-level-fruits { 
 	height: 30px;
 	top: 670px;
-	left: 50px;
 	position: absolute;
+}
+#canvas-lifes { 
+	width: 100px;
+	left: 50px;
+}
+#canvas-level-fruits { 
+	width: 300px;
+	right: 50px;
 }
 
 
