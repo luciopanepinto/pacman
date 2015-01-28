@@ -9,6 +9,7 @@ var SCORE_SUPER_BUBBLE = 50;
 var SCORE_GHOST_COMBO = 200;
 
 var LIFES = 2;
+var GAMEOVER = false;
 
 var LEVEL = 1;
 var LEVEL_NEXT_TIMER = -1;
@@ -20,10 +21,52 @@ var TIME_LEVEL = 0;
 var TIME_LIFE = 0;
 var TIME_FRUITS = 0;
 
-function initGame() { 
+function initGame(newgame) { 
+
+	if (newgame) { 
+		stopPresentation();
+		stopTrailer();
+	
+		HOME = false;
+		GAMEOVER = false;
+
+		score(0);
+		clearMessage();
+		$("#home").hide();
+		$("#panel").show();
+		
+		var ctx = null;
+		var canvas = document.getElementById('canvas-panel-title-pacman');
+		canvas.setAttribute('width', '38');
+		canvas.setAttribute('height', '32');
+		if (canvas.getContext) { 
+			ctx = canvas.getContext('2d');
+		}
+		
+		var x = 15;
+		var y = 16;
+		
+		ctx.fillStyle = "#fff200";
+		ctx.beginPath();
+		ctx.arc(x, y, 14, (0.35 - (3 * 0.05)) * Math.PI, (1.65 + (3 * 0.05)) * Math.PI, false);
+		ctx.lineTo(x - 5, y);
+		ctx.fill();
+		ctx.closePath();
+		
+		x = 32;
+		y = 16;
+		
+		ctx.fillStyle = "#dca5be";
+		ctx.beginPath();
+		ctx.arc(x, y, 4, 0, 2 * Math.PI, false);
+		ctx.fill();
+		ctx.closePath();
+	}
+
 	initBoard();
 	drawBoard();
-
+	drawBoardDoor();
+	
 	initPaths();
 	drawPaths();
 	
@@ -57,6 +100,7 @@ function win() {
 }
 function prepareNextLevel(i) { 
 	if ( LEVEL_NEXT_TIMER === -1 ) { 
+		eraseBoardDoor();
 		LEVEL_NEXT_TIMER = setInterval("prepareNextLevel()", 250);
 	} else { 
 		LEVEL_NEXT_STATE ++;
@@ -186,21 +230,21 @@ function lifes(l) {
 	}
 	
 	var canvas = document.getElementById('canvas-lifes');
-	canvas.setAttribute('width', '100');
+	canvas.setAttribute('width', '120');
 	canvas.setAttribute('height', '30');
 	if (canvas.getContext) { 
 		var ctx = canvas.getContext('2d');
 		
-		ctx.clearRect(0, 0, 100, 30);
+		ctx.clearRect(0, 0, 120, 30);
 		ctx.fillStyle = "#fff200";
-		for (var i = 0, imax = LIFES; i < imax; i ++) { 
+		for (var i = 0, imax = LIFES; (i < imax && i < 4); i ++) { 
 			ctx.beginPath();
 			
 			var lineToX = 13;
 			var lineToY = 15;
 			
-			ctx.arc(lineToX + (i * 28), lineToY, 13, (1.35 - (3 * 0.05)) * Math.PI, (0.65 + (3 * 0.05)) * Math.PI, false);
-			ctx.lineTo(lineToX + (i * 28) + 4, lineToY);
+			ctx.arc(lineToX + (i * 30), lineToY, 13, (1.35 - (3 * 0.05)) * Math.PI, (0.65 + (3 * 0.05)) * Math.PI, false);
+			ctx.lineTo(lineToX + (i * 30) + 4, lineToY);
 			ctx.fill();
 			ctx.closePath();
 		}
@@ -208,12 +252,24 @@ function lifes(l) {
 }
 
 function gameover() { 
+	GAMEOVER = true;
 	message("game over");
 	stopTimes();
+
+	erasePacman();
+	eraseGhosts();
+	
+	resetPacman();
+	resetGhosts();
+	
 	TIME_GAME = 0;
 	TIME_LEVEL = 0;
 	TIME_LIFE = 0;
 	TIME_FRUITS = 0;
+
+	LIFES = 2;
+	LEVEL = 1;
+	SCORE = 0;
 }
 
 function message(m) { 
@@ -226,16 +282,29 @@ function clearMessage() {
 }
 
 function score(s, type) { 
-	if (SCORE < 10000 && SCORE + s >= 10000) { 
-		lifes(+1);
+
+	var scoreBefore = (SCORE / 10000) | 0;
+	
+	SCORE += s;
+	if (SCORE === 0) { 
+		$('#score span').html("00");
+	} else { 
+		$('#score span').html(SCORE);
+	}
+	
+	var scoreAfter = (SCORE / 10000) | 0;
+	if (scoreAfter > scoreBefore) { 
+		lifes( +1 );
 	}
 
-	SCORE += s;
-	$('#score span').html(SCORE);
 	
 	if (SCORE > HIGHSCORE) { 
 		HIGHSCORE = SCORE;
-		$('#highscore span').html(HIGHSCORE);
+		if (HIGHSCORE === 0) { 
+			$('#highscore span').html("00");
+		} else { 
+			$('#highscore span').html(HIGHSCORE);
+		}
 	}
 	
 	if (type && (type === "clyde" || type === "pinky" || type === "inky" || type === "blinky") ) { 

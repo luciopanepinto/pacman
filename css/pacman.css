@@ -93,7 +93,7 @@ span.combo, span.fruits {
 	font-weight: normal;
 }
 
-#panel { 
+#panel, #home { 
 	width: 550px;
 	height: 690px;
 	margin: auto;
@@ -122,34 +122,32 @@ span.combo, span.fruits {
 	position: absolute;
 }
 #canvas-lifes { 
-	width: 100px;
+	width: 120px;
 	left: 50px;
 }
 #canvas-level-fruits { 
-	width: 300px;
+	width: 265px;
 	right: 50px;
 }
 
-
-h1, h1 em { 
-	margin: 0px 0px 50px 0px;
+h1 { 
+	margin: 0px 0px 74px 0px;
 	padding: 0px;
-	font-size: 38px;
+	font-size: 24px;
 	letter-spacing: 3px;
 	color: #fff;
 	text-transform: uppercase;
 	font-style: normal;
 }
-h1 em { 
-	color: #fff200;
+h3 { 
+	margin: 0px;
+	padding: 0px;
+	font-size: 20px;
+	letter-spacing: 2px;
+	color: #fff;
+	text-transform: uppercase;
+	font-style: normal;
 }
-h1 span { 
-	color: red;
-	padding-left: 170px;
-	text-transform: none;
-	letter-spacing: 1px;
-}
-
 
 .ui-mobile {
 	-webkit-touch-callout: none;
@@ -160,21 +158,19 @@ h1 span {
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
+@media screen and (max-width:2100px), screen and (min-device-width : 1500px) and (max-device-width : 2100px) { 
+	#panel, #home { 
+		zoom: 135%;
+	}
+}
 
-
-@media screen and (max-width:1024px), screen and (min-device-width : 768px) and (max-device-width : 1024px) { 
-
+@media screen and (max-width:1500px), screen and (min-device-width : 768px) and (max-device-width : 1500px) { 
+	#panel, #home { 
+		zoom: 100%;
+	}
 }
 @media screen and (max-width:480px), screen and (min-device-width : 320px) and (max-device-width : 480px) { 
-	
-	h1 { 
-		font-size: 30px;
-		letter-spacing: 5px;
-		-webkit-text-stroke-width: 1px;
-	}
-
-	#board { 
-		width: 160px;
-		height: 260px;
+	#panel, #home { 
+		zoom: 65%;
 	}
 }

@@ -67,3 +67,20 @@ CanvasRenderingContext2D.prototype.roundRect = function(sx, sy, ex, ey, r) {
     this.arc(sx+r,sy+r,r,r2d*180,r2d*270,false);
     this.closePath();
 }
+
+CanvasRenderingContext2D.prototype.oval = function(centerX, centerY, width, height) {
+	
+  this.beginPath();
+  
+  this.moveTo(centerX, centerY - height/2); 
+  
+  this.bezierCurveTo(
+    centerX + width/2, centerY - height/2, 
+    centerX + width/2, centerY + height/2, 
+    centerX, centerY + height/2); 
+
+  this.bezierCurveTo(
+    centerX - width/2, centerY + height/2, 
+    centerX - width/2, centerY - height/2, 
+    centerX, centerY - height/2); 
+}

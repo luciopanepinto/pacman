@@ -9,9 +9,11 @@
 		<meta name="keywords" content="pacman, pac-man, pac-man online, pacman online, online, online games, games, free, puzzle, lucio panepinto, lucio, panepinto, html, html5, css, css3, javascript, jquery, rwd, responsive, responsive web design, responsive web, web design, canvas, draw" />
 
 		<link rel="stylesheet" type="text/css" href="css/pacman.css" />
+		<link rel="stylesheet" type="text/css" href="css/pacman-home.css" />
 	
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script type="text/javascript" src="js/jquery-mobile.js"></script>
+		
 		<script type="text/javascript" src="js/game.js"></script>
 		<script type="text/javascript" src="js/tools.js"></script>
 		<script type="text/javascript" src="js/board.js"></script>
@@ -20,54 +22,65 @@
 		<script type="text/javascript" src="js/fruits.js"></script>
 		<script type="text/javascript" src="js/pacman.js"></script>
 		<script type="text/javascript" src="js/ghosts.js"></script>
+		<script type="text/javascript" src="js/home.js"></script>
 		
 		<script type="text/javascript">		
 			
 			$(document).ready(function() { 
 				$.mobile.loading().hide();
 				
-				initGame();
+				initHome();
+				//initGame();
 				
 				$("body").keyup(function(e) { 
 					KEYDOWN = false;
 				});
 				
 				$("body").keydown(function(e) { 
-					if (!KEYDOWN) { 
-						KEYDOWN = true;
-						if (PACMAN_DEAD && !LOCK) { 
-							erasePacman();
-							resetPacman();
-							drawPacman();
-							
-							eraseGhosts();
-							resetGhosts();
-							drawGhosts();
-							moveGhosts();
-							
-							blinkSuperBubbles();
-							
-						} else if (e.keyCode >= 37 && e.keyCode <= 40 && !PAUSE && !PACMAN_DEAD && !LOCK) { 
-							if ( e.keyCode === 39 ) { 
-								movePacman(1);
-							} else if ( e.keyCode === 40 ) { 
-								movePacman(2);
-							} else if ( e.keyCode === 37 ) { 
-								movePacman(3);
-							} else if ( e.keyCode === 38 ) { 
-								movePacman(4);
-							}
-						} else if (e.keyCode === 68 && !PAUSE) { 
-							if ( $("#canvas-paths").css("display") === "none" ) { 
-								$("#canvas-paths").show();
-							} else { 
-								$("#canvas-paths").hide();
-							}
-						} else if (e.keyCode === 80 && !PACMAN_DEAD) { 
-							if (PAUSE) { 
-								resumeGame();
-							} else { 
-								pauseGame();
+				
+					if (HOME) { 
+						
+						initGame(true);
+						
+					} else { 				
+						if (!KEYDOWN) { 
+							KEYDOWN = true;
+							if (PACMAN_DEAD && !LOCK) { 
+								erasePacman();
+								resetPacman();
+								drawPacman();
+								
+								eraseGhosts();
+								resetGhosts();
+								drawGhosts();
+								moveGhosts();
+								
+								blinkSuperBubbles();
+								
+							} else if (e.keyCode >= 37 && e.keyCode <= 40 && !PAUSE && !PACMAN_DEAD && !LOCK) { 
+								if ( e.keyCode === 39 ) { 
+									movePacman(1);
+								} else if ( e.keyCode === 40 ) { 
+									movePacman(2);
+								} else if ( e.keyCode === 37 ) { 
+									movePacman(3);
+								} else if ( e.keyCode === 38 ) { 
+									movePacman(4);
+								}
+							} else if (e.keyCode === 68 && !PAUSE) { 
+								if ( $("#canvas-paths").css("display") === "none" ) { 
+									$("#canvas-paths").show();
+								} else { 
+									$("#canvas-paths").hide();
+								}
+							} else if (e.keyCode === 80 && !PACMAN_DEAD && !LOCK) { 
+								if (PAUSE) { 
+									resumeGame();
+								} else { 
+									pauseGame();
+								}
+							} else if (GAMEOVER) { 
+								initHome();
 							}
 						}
 					}
@@ -80,8 +93,25 @@
 		
 	<body>
 	
+		<div id="home">
+			<h1>pac-man</h1>
+			<h3>Lucio PANEPINTO<br><em>2015</em></h3>
+			<canvas id="canvas-home-title-pacman"></canvas>
+			<div id="presentation">
+				<div id="presentation-titles">character &nbsp;/&nbsp; nickname</div>
+				<canvas id="canvas-presentation-blinky"></canvas><div id="presentation-character-blinky">- shadow</div><div id="presentation-name-blinky">"blinky"</div>
+				<canvas id="canvas-presentation-pinky"></canvas><div id="presentation-character-pinky">- speedy</div><div id="presentation-name-pinky">"pinky"</div>
+				<canvas id="canvas-presentation-inky"></canvas><div id="presentation-character-inky">- bashful</div><div id="presentation-name-inky">"inky"</div>
+				<canvas id="canvas-presentation-clyde"></canvas><div id="presentation-character-clyde">- pokey</div><div id="presentation-name-clyde">"clyde"</div>
+			</div>
+			<canvas id="trailer">
+			
+			</canvas>
+		</div>
+	
 		<div id="panel">
-			<h1>pa<em>c</em>-man<span>developing...</span></h1>
+			<h1>pac-man</h1>
+			<canvas id="canvas-panel-title-pacman"></canvas>
 			<div id="score"><h2>1UP</h2><span>00</span></div>
 			<div id="highscore"><h2>High Score</h2><span>00</span></div>
 			<div id="board">

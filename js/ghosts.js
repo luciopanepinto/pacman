@@ -10,6 +10,7 @@ var GHOST_BLINKY_STATE = 0;
 var GHOST_BLINKY_EAT_TIMER = null;
 var GHOST_BLINKY_AFFRAID_TIMER = null;
 var GHOST_BLINKY_AFFRAID_STATE = 0;
+var GHOST_BLINKY_TUNNEL = false;
 
 var GHOST_PINKY_CANVAS_CONTEXT = null;
 var GHOST_PINKY_POSITION_X = 276;
@@ -23,6 +24,7 @@ var GHOST_PINKY_STATE = 0;
 var GHOST_PINKY_EAT_TIMER = null;
 var GHOST_PINKY_AFFRAID_TIMER = null;
 var GHOST_PINKY_AFFRAID_STATE = 0;
+var GHOST_PINKY_TUNNEL = false;
 
 var GHOST_INKY_CANVAS_CONTEXT = null;
 var GHOST_INKY_POSITION_X = 238;
@@ -36,6 +38,7 @@ var GHOST_INKY_STATE = 0;
 var GHOST_INKY_EAT_TIMER = null;
 var GHOST_INKY_AFFRAID_TIMER = null;
 var GHOST_INKY_AFFRAID_STATE = 0;
+var GHOST_INKY_TUNNEL = false;
 
 var GHOST_CLYDE_CANVAS_CONTEXT = null;
 var GHOST_CLYDE_POSITION_X = 314;
@@ -49,12 +52,14 @@ var GHOST_CLYDE_STATE = 0;
 var GHOST_CLYDE_EAT_TIMER = null;
 var GHOST_CLYDE_AFFRAID_TIMER = null;
 var GHOST_CLYDE_AFFRAID_STATE = 0;
+var GHOST_CLYDE_TUNNEL = false;
 
 var GHOST_AFFRAID_COLOR = "#2d3eff";
 var GHOST_AFFRAID_FINISH_COLOR = "#fff";
 var GHOST_POSITION_STEP = 2;
 var GHOST_MOVING_SPEED = 15;
-var GHOST_AFFRAID_MOVING_SPEED = 44;
+var GHOST_TUNNEL_MOVING_SPEED = 35;
+var GHOST_AFFRAID_MOVING_SPEED = 40;
 var GHOST_EAT_MOVING_SPEED = 6;
 var GHOST_AFFRAID_TIME = 8500;
 var GHOST_EAT_TIME = 5500;
@@ -192,7 +197,7 @@ function startEatGhost(ghost) {
 	pauseGhosts();
 	pausePacman();
 	
-	setTimeout('eatGhost(\''+ ghost + '\')', 1000);
+	setTimeout('eatGhost(\''+ ghost + '\')', 600);
 }
 
 function eatGhost(ghost) { 
@@ -231,7 +236,11 @@ function moveGhost(ghost) {
 		if (eval('GHOST_' + ghost.toUpperCase() + '_STATE === 1')) { 
 			speed =  GHOST_AFFRAID_MOVING_SPEED;
 		} else if (eval('GHOST_' + ghost.toUpperCase() + '_STATE === 0')) { 
-			speed =  GHOST_MOVING_SPEED;
+			if (eval('GHOST_' + ghost.toUpperCase() + '_TUNNEL === false')) { 
+				speed =  GHOST_MOVING_SPEED;
+			} else { 
+				speed =  GHOST_TUNNEL_MOVING_SPEED;
+			}
 		} else { 
 			speed =  GHOST_EAT_MOVING_SPEED;
 		}
@@ -279,11 +288,34 @@ function moveGhost(ghost) {
 			drawGhost(ghost);
 			
 			testGhostPacman(ghost);
+			testGhostTunnel(ghost);
 		} else { 
 			eval('GHOST_' + ghost.toUpperCase() + '_DIRECTION = oneDirection();');
 		}
 	}
 }
+
+function testGhostTunnel(ghost) { 
+	if ( eval('GHOST_' + ghost.toUpperCase() + '_STATE === 0') ) { 
+		if (isInTunnel(ghost) && eval('GHOST_' + ghost.toUpperCase() + '_TUNNEL === false')) { 
+			stopGhost(ghost);
+			eval('GHOST_' + ghost.toUpperCase() + '_TUNNEL = true');
+			moveGhost(ghost);
+		} else if (!isInTunnel(ghost) && eval('GHOST_' + ghost.toUpperCase() + '_TUNNEL === true')) { 
+			stopGhost(ghost);
+			eval('GHOST_' + ghost.toUpperCase() + '_TUNNEL = false');
+			moveGhost(ghost);
+		}
+	}
+}
+function isInTunnel(ghost) { 
+	if ( ( eval('GHOST_' + ghost.toUpperCase() + '_POSITION_X >= 2') && eval('GHOST_' + ghost.toUpperCase() + '_POSITION_X <= 106') ) && eval('GHOST_' + ghost.toUpperCase() + '_POSITION_Y === 258') ) { 
+		return true;
+	} else if ( ( eval('GHOST_' + ghost.toUpperCase() + '_POSITION_X >= 462') && eval('GHOST_' + ghost.toUpperCase() + '_POSITION_X <= 548') ) && eval('GHOST_' + ghost.toUpperCase() + '_POSITION_Y === 258') ) { 
+		return true;
+	}
+}
+
 
 function changeDirection(ghost) { 
 	eval('var direction = GHOST_' + ghost.toUpperCase() + '_DIRECTION');
