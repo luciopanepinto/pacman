@@ -169,7 +169,7 @@ h3 {
 		zoom: 100%;
 	}
 }
-@media screen and (max-height:640px), screen and (min-device-height : 480px) and (max-device-height : 640px) { 
+@media screen and (max-height:640px), screen and (min-device-height : 480px) and (max-device-height : 640px) and (-webkit-device-pixel-ratio: 3) { 
 	#panel, #home { 
 		zoom: 65%;
 	}
