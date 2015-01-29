@@ -30,7 +30,43 @@
 				$.mobile.loading().hide();
 				
 				initHome();
-				//initGame();
+				
+				$("#home").tap(function(e) { 
+					e.preventDefault();
+					simulateKeydown(13);
+				});
+				$("#control-up").tap(function(e) { 
+					e.preventDefault();
+					simulateKeydown(38);
+					simulateKeyup(13);
+				});
+				$("#control-down").tap(function(e) { 
+					e.preventDefault();
+					simulateKeydown(40);
+					simulateKeyup(13);
+				});
+				$("#control-left").tap(function(e) { 
+					e.preventDefault();
+					simulateKeydown(37);
+					simulateKeyup(13);
+				});
+				$("#control-right").tap(function(e) { 
+					e.preventDefault();
+					simulateKeydown(39);
+					simulateKeyup(13);
+				});
+				
+				
+				function simulateKeyup(code) { 
+					var e = jQuery.Event("keyup");
+					e.keyCode = code;
+					jQuery('body').trigger(e);
+				}
+				function simulateKeydown(code) { 
+					var e = jQuery.Event("keydown");
+					e.keyCode = code;
+					jQuery('body').trigger(e);
+				}
 				
 				$("body").keyup(function(e) { 
 					KEYDOWN = false;
@@ -104,9 +140,7 @@
 				<canvas id="canvas-presentation-inky"></canvas><div id="presentation-character-inky">- bashful</div><div id="presentation-name-inky">"inky"</div>
 				<canvas id="canvas-presentation-clyde"></canvas><div id="presentation-character-clyde">- pokey</div><div id="presentation-name-clyde">"clyde"</div>
 			</div>
-			<canvas id="trailer">
-			
-			</canvas>
+			<canvas id="trailer"></canvas>
 		</div>
 	
 		<div id="panel">
@@ -124,6 +158,10 @@
 				<canvas id="canvas-ghost-pinky"></canvas>
 				<canvas id="canvas-ghost-inky"></canvas>
 				<canvas id="canvas-ghost-clyde"></canvas>
+				<div id="control-up"></div>
+				<div id="control-down"></div>
+				<div id="control-left"></div>
+				<div id="control-right"></div>
 			</div>
 			<canvas id="canvas-lifes"></canvas>
 			<canvas id="canvas-level-fruits"></canvas>
