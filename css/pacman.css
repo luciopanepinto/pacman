@@ -130,6 +130,41 @@ span.combo, span.fruits {
 	right: 50px;
 }
 
+#control-up, #control-down, #control-left, #control-right { 
+	position: absolute;
+	margin: auto;
+}
+#control-up { 
+	width: 300px;
+	height: 120px;
+	top: 0px;
+	right: 0px;
+	left: 0px;
+}
+#control-down { 
+	width: 300px;
+	height: 120px;
+	bottom: 0px;
+	right: 0px;
+	left: 0px;
+}
+#control-left { 
+	height: 300px;
+	width: 120px;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+}
+#control-right { 
+	height: 300px;
+	width: 120px;
+	top: 0px;
+	bottom: 0px;
+	right: 0px;
+}
+
+
+
 h1 { 
 	margin: 0px 0px 74px 0px;
 	padding: 0px;
