@@ -287,8 +287,10 @@ function moveGhost(ghost) {
 			
 			drawGhost(ghost);
 			
-			testGhostPacman(ghost);
-			testGhostTunnel(ghost);
+			if (eval('GHOST_' + ghost.toUpperCase() + '_BODY_STATE === 3') && eval('GHOST_' + ghost.toUpperCase() + '_STATE != -1')) { 
+				testGhostPacman(ghost);
+				testGhostTunnel(ghost);
+			}
 		} else { 
 			eval('GHOST_' + ghost.toUpperCase() + '_DIRECTION = oneDirection();');
 		}

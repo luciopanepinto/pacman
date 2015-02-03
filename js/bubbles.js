@@ -8,11 +8,12 @@ var BUBBLES_Y_END = 522;
 var BUBBLES_SIZE = 3;
 var BUBBLES_COUNTER = 0;
 
+var SUPER_BUBBLES = [];
 var SUPER_BUBBLES_SIZE = 8;
 var SUPER_BUBBLES_BLINK = false;
 var SUPER_BUBBLES_BLINK_STATE = 0;
 var SUPER_BUBBLES_BLINK_TIMER = -1;
-var SUPER_BUBBLES_BLINK_SPEED = 250;
+var SUPER_BUBBLES_BLINK_SPEED = 300;
 
 function initBubbles() { 
 	BUBBLES_COUNTER = 0;
@@ -33,7 +34,7 @@ function drawBubbles() {
 	var ctx = getBubblesCanevasContext();
 	ctx.fillStyle = "#dca5be";
 	
-	for (var line = 1, linemax = 29, i = 0; line <= linemax; line ++) { 
+	for (var line = 1, linemax = 29, i = 0, s = 0; line <= linemax; line ++) { 
 		var y = getYFromLine(line);
 		for (var x = BUBBLES_X_START, xmax = BUBBLES_X_END, bubble = 1 ; x < xmax; bubble ++, x += BUBBLES_GAP) { 
 			if (canAddBubble(line, bubble)) { 
@@ -42,17 +43,19 @@ function drawBubbles() {
 				if (isSuperBubble(line, bubble)) { 
 					type = "s";
 					size = SUPER_BUBBLES_SIZE;
+					SUPER_BUBBLES[s] = line + ";" + bubble + ";" + correctionX(x, bubble) + "," + y;
+					s ++;
 				} else { 
 					type = "b";
 					size = BUBBLES_SIZE;
 				}
 				BUBBLES_COUNTER ++;
 				ctx.beginPath();
-				ctx.arc(x, y, size, 0, 2 * Math.PI, false);
+				ctx.arc(correctionX(x, bubble), y, size, 0, 2 * Math.PI, false);
 				ctx.fill();
 				ctx.closePath();
 				
-				BUBBLES[i] = line + ";" + bubble + ";" + x + "," + y + ";" + type + ";0"
+				BUBBLES[parseInt(correctionX(x, bubble)) + "," + parseInt(y)] = line + ";" + bubble + ";" + type + ";0"
 				i ++;
 			}
 		}
@@ -77,28 +80,27 @@ function blinkSuperBubbles() {
 			SUPER_BUBBLES_BLINK_STATE = 0;
 		}
 		
-		for (var i = 0, imax = BUBBLES.length; i < imax; i ++) { 
-			var b = BUBBLES[i];
+		for (var i = 0, imax = SUPER_BUBBLES.length; i < imax; i ++) { 
+		
+			var s = SUPER_BUBBLES[i];
+			var sx = parseInt(s.split(";")[2].split(",")[0]);
+			var sy = parseInt(s.split(";")[2].split(",")[1]);
+		
+			var b = BUBBLES[sx + "," + sy];
+			var eat = b.split(";")[3];
 			
-			var line = b.split(";")[0];
-			var bubble = b.split(";")[1];
-			var x = parseInt(b.split(";")[2].split(",")[0]);
-			var y = parseInt(b.split(";")[2].split(",")[1]);
-			var type = b.split(";")[3];
-			var eat = b.split(";")[4];
+			if (eat === "0") { 
 			
-			if (type === "s" && eat === "0") { 
-				
-					if (SUPER_BUBBLES_BLINK_STATE === 1) { 
-						eraseBubble("s", x, y);
-					} else { 
-						var ctx = getBubblesCanevasContext();
-						ctx.fillStyle = "#dca5be";
-						ctx.beginPath();
-						ctx.arc(x, y, SUPER_BUBBLES_SIZE, 0, 2 * Math.PI, false);
-						ctx.fill();
-						ctx.closePath();
-					}
+				if (SUPER_BUBBLES_BLINK_STATE === 1) { 
+					eraseBubble("s", sx, sy);
+				} else { 
+					var ctx = getBubblesCanevasContext();
+					ctx.fillStyle = "#dca5be";
+					ctx.beginPath();
+					ctx.arc(sx, sy, SUPER_BUBBLES_SIZE, 0, 2 * Math.PI, false);
+					ctx.fill();
+					ctx.closePath();
+				}
 
 			}
 		}
@@ -108,9 +110,6 @@ function blinkSuperBubbles() {
 function eraseBubble(t, x, y) { 
 
 	var ctx = getBubblesCanevasContext();
-	
-	//ctx.save();
-	//ctx.globalCompositeOperation = "destination-out";
 
 	var size = "";
 	if (t === "s") { 
@@ -118,13 +117,8 @@ function eraseBubble(t, x, y) {
 	} else { 
 		size = BUBBLES_SIZE;
 	}
-	
-	//ctx.beginPath();
+
 	ctx.clearRect(x - size, y - size, (size + 1) * 2, (size + 1) * 2);
-	//ctx.fill();
-	//ctx.closePath();
-	
-	//ctx.restore();
 }
 
 function isSuperBubble(line, bubble) { 
@@ -176,6 +170,26 @@ function canAddBubble(line, bubble) {
 	return true;
 }
 
+function correctionX(x, bubble) { 
+	
+	if (bubble === 3) { 
+		return x + 1;
+	} else if (bubble === 6) { 
+		return x + 1;
+	} else if (bubble === 15) { 
+		return x + 1;
+	} else if (bubble === 18) { 
+		return x + 1;
+	} else if (bubble === 21) { 
+		return x + 2;
+	} else if (bubble === 24) { 
+		return x + 2;
+	} else if (bubble === 26) { 
+		return x + 1;
+	}
+	return x;
+}
+
 function getYFromLine(line) { 
 	var y = BUBBLES_Y_START;
 	if (line < 8) { 
@@ -187,7 +201,7 @@ function getYFromLine(line) {
 	} else if (line > 20 && line < 26) { 
 		y = 362 + ( (line - 20) * 18 );
 	} else if (line > 25 && line < 29) { 
-		y = 451 + ( (line - 25) * 18 );
+		y = 452 + ( (line - 25) * 18 );
 	} else if (line === 29) { 
 		y = BUBBLES_Y_END;
 	}

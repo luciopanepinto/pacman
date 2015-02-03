@@ -12,8 +12,8 @@ var PACMAN_MOVING = false;
 var PACMAN_MOVING_TIMER = -1;
 var PACMAN_MOVING_SPEED = 15;
 var PACMAN_CANVAS_CONTEXT = null;
-var PACMAN_EAT_GAP = 10;
-var PACMAN_GHOST_GAP = 17;
+var PACMAN_EAT_GAP = 15;
+var PACMAN_GHOST_GAP = 20;
 var PACMAN_FRUITS_GAP = 15;
 var PACMAN_KILLING_TIMER = -1;
 var PACMAN_KILLING_SPEED = 100;
@@ -155,9 +155,11 @@ function movePacman(direction) {
 			
 			drawPacman();
 			
-			testBubblesPacman();
-			testGhostsPacman();
-			testFruitsPacman();
+			if ((PACMAN_MOUNTH_STATE) === 0 || (PACMAN_MOUNTH_STATE) === 3) { 
+				testBubblesPacman();
+				testGhostsPacman();
+				testFruitsPacman();
+			}
 		} else { 
 			stopPacman();
 		}
@@ -186,11 +188,14 @@ function canMovePacman(direction) {
 	for (var i = 0, imax = PATHS.length; i < imax; i ++) { 
 	
 		var p = PATHS[i];
+		var c = p.split("-");
+		var cx = c[0].split(",");
+		var cy = c[1].split(",");
 	
-		var startX = p.split("-")[0].split(",")[0];
-		var startY = p.split("-")[0].split(",")[1];
-		var endX = p.split("-")[1].split(",")[0];
-		var endY = p.split("-")[1].split(",")[1];
+		var startX = cx[0];
+		var startY = cx[1];
+		var endX = cy[0];
+		var endY = cy[1];
 
 		if (positionX >= startX && positionX <= endX && positionY >= startY && positionY <= endY) { 
 			return true;
@@ -237,16 +242,7 @@ function drawPacman() {
 function erasePacman() { 
 
 	var ctx = getPacmanCanevasContext();
-	
-	//ctx.save();
-	//ctx.globalCompositeOperation = "destination-out";
-
-	//ctx.beginPath();
-	ctx.clearRect(PACMAN_POSITION_X - PACMAN_SIZE, PACMAN_POSITION_Y - PACMAN_SIZE, PACMAN_SIZE * 2, PACMAN_SIZE * 2);
-	//ctx.fill();
-	//ctx.closePath();
-	
-	//ctx.restore();
+	ctx.clearRect( (PACMAN_POSITION_X - 2) - PACMAN_SIZE, (PACMAN_POSITION_Y - 2) - PACMAN_SIZE, (PACMAN_SIZE * 2) + 5, (PACMAN_SIZE * 2) + 5);
 }
 
 function killPacman() { 
@@ -286,9 +282,9 @@ function testGhostsPacman() {
 function testGhostPacman(ghost) { 
 	eval('var positionX = GHOST_' + ghost.toUpperCase() + '_POSITION_X');
 	eval('var positionY = GHOST_' + ghost.toUpperCase() + '_POSITION_Y');
-	eval('var state = GHOST_' + ghost.toUpperCase() + '_STATE');
 		
 	if (positionX <= PACMAN_POSITION_X + PACMAN_GHOST_GAP && positionX >= PACMAN_POSITION_X - PACMAN_GHOST_GAP && positionY <= PACMAN_POSITION_Y + PACMAN_GHOST_GAP && positionY >= PACMAN_POSITION_Y - PACMAN_GHOST_GAP ) { 
+		eval('var state = GHOST_' + ghost.toUpperCase() + '_STATE');
 		if (state === 0) { 
 			killPacman();
 		} else if (state === 1) { 
@@ -305,20 +301,37 @@ function testFruitsPacman() {
 	}
 }
 function testBubblesPacman() { 
-	for (var i = 0, imax = BUBBLES.length; i < imax; i ++) { 
-		var b = BUBBLES[i];
 		
-		var line = b.split(";")[0];
-		var bubble = b.split(";")[1];
-		var positionX = parseInt(b.split(";")[2].split(",")[0]);
-		var positionY = parseInt(b.split(";")[2].split(",")[1]);
-		var type = b.split(";")[3];
-		var eat = b.split(";")[4];
+	var i, imax;
+	if (PACMAN_DIRECTION === 3 || PACMAN_DIRECTION === 4) { 
+		i = -PACMAN_EAT_GAP;
+		imax = 0;
+	} else if (PACMAN_DIRECTION === 1 || PACMAN_DIRECTION === 2) { 
+		i = 0;
+		imax = PACMAN_EAT_GAP;
+	}
+	
+	
+	for ( ; i < imax; i ++ ) { 
+	
+		var testX = (PACMAN_POSITION_X);
+		var testY = (PACMAN_POSITION_Y);
+		if (PACMAN_DIRECTION === 3 || PACMAN_DIRECTION === 1) { 
+			testX += i;
+		} else if (PACMAN_DIRECTION === 4 || PACMAN_DIRECTION === 2) { 
+			testY += i;
+		}
+	
+		var b = BUBBLES[testX + "," + testY];
 		
-		if (eat === "0") { 
-			if (positionX <= PACMAN_POSITION_X + PACMAN_EAT_GAP && positionX >= PACMAN_POSITION_X - PACMAN_EAT_GAP && positionY <= PACMAN_POSITION_Y + PACMAN_EAT_GAP && positionY >= PACMAN_POSITION_Y - PACMAN_EAT_GAP ) { 
-				eraseBubble(type, positionX, positionY);
-				BUBBLES[i] = b.substr(0, b.length - 1) + "1";
+		if (b) { 
+			var t = b.split(";");
+			var eat = t[3];
+			
+			if (eat === "0") { 
+				var type = t[2];
+				eraseBubble(type, testX, testY);
+				BUBBLES[testX + "," + testY] = b.substr(0, b.length - 1) + "1";
 				if (type === "s") { 
 					score(SCORE_SUPER_BUBBLE);
 					affraidGhosts();

@@ -19,9 +19,9 @@
 	background-color: #000;
 	position: absolute;
 	top: 10px;
-	left: 185px;
+	left: 182px;
 	height: 100px;
-	width: 115px;
+	width: 118px;
 }
 #canvas-panel-title-pacman { 
 	background-color: #000;
@@ -111,4 +111,24 @@
 	bottom: 100px;
 	width: 500px;
 	height: 50px;
+}
+
+@media screen and (min-height:1200px), screen and (min-device-height : 1200px) { 
+
+}
+
+@media screen and (max-width:1024px), screen and (min-device-width : 768px) and (max-device-width : 1024px) { 
+
+	
+	#canvas-panel-title-pacman { 
+		left: 49px;
+		width: 42px;
+	}
+}
+
+@media screen and (max-height:640px), screen and (min-device-height : 480px) and (max-device-height : 640px) and (-webkit-device-pixel-ratio: 3) { 
+
+}
+@media screen and (max-height:480px), screen and (min-device-height : 320px) and (max-device-height : 480px) { 
+
 }
