@@ -217,6 +217,7 @@ h3 {
 }
 
 
+
 @media screen and (min-height:1200px), screen and (min-device-height : 1200px) { 
 	#panel, #home { 
 		zoom: 135%;
@@ -231,7 +232,6 @@ h3 {
 		display: inline; 
 	} 
 }
-
 @media screen and (max-height:640px), screen and (min-device-height : 480px) and (max-device-height : 640px) and (-webkit-device-pixel-ratio: 3) { 
 	#panel, #home { 
 		zoom: 65%;
