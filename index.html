@@ -31,8 +31,37 @@
 		
 		<script type="text/javascript">		
 			
+			function simulateKeyup(code) { 
+				var e = jQuery.Event("keyup");
+				e.keyCode = code;
+				jQuery('body').trigger(e);
+			}
+			function simulateKeydown(code) { 
+				var e = jQuery.Event("keydown");
+				e.keyCode = code;
+				jQuery('body').trigger(e);
+			}
+			
 			$(document).ready(function() { 
 				$.mobile.loading().hide();
+				
+				HELP_TIMER = setInterval('blinkHelp()', HELP_DELAY);
+				
+				$(".help-button, #help").click(function(e) { 
+					e.stopPropagation();
+					if (!PACMAN_DEAD && !LOCK && !GAMEOVER) { 
+						if ( $('#help').css("display") === "none") { 
+							$('#help').fadeIn("slow");
+							$(".help-button").hide();
+							if ( $("#panel").css("display") !== "none") { 
+								pauseGame();
+							}
+						} else { 
+							$('#help').fadeOut("slow");
+							$(".help-button").show();
+						}
+					}
+				});
 				
 				initHome();
 				
@@ -60,18 +89,7 @@
 					simulateKeydown(39);
 					simulateKeyup(13);
 				});
-				
-				
-				function simulateKeyup(code) { 
-					var e = jQuery.Event("keyup");
-					e.keyCode = code;
-					jQuery('body').trigger(e);
-				}
-				function simulateKeydown(code) { 
-					var e = jQuery.Event("keydown");
-					e.keyCode = code;
-					jQuery('body').trigger(e);
-				}
+
 				
 				$("body").keyup(function(e) { 
 					KEYDOWN = false;
@@ -109,11 +127,11 @@
 									movePacman(4);
 								}
 							} else if (e.keyCode === 68 && !PAUSE) { 
-								if ( $("#canvas-paths").css("display") === "none" ) { 
+								/*if ( $("#canvas-paths").css("display") === "none" ) { 
 									$("#canvas-paths").show();
 								} else { 
 									$("#canvas-paths").hide();
-								}
+								}*/
 							} else if (e.keyCode === 80 && !PACMAN_DEAD && !LOCK) { 
 								if (PAUSE) { 
 									resumeGame();
@@ -134,6 +152,20 @@
 		
 	<body>
 	
+		<div id="help">
+			<h2>Help</h2>
+			<table align="center" border="0" cellPadding="2" cellSpacing="0">
+				<tbody>
+					<tr><td>Arrow Left : </td><td>Move Left</td></tr>
+					<tr><td>Arrow Right : </td><td>Move Right</td></tr>
+					<tr><td>Arrow Down : </td><td>Move Down</td></tr>
+					<tr><td>Arrow Up : </td><td>Move Up</td></tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
+					<tr><td>P : </td><td>PAUSE</td></tr>
+				</tbody>
+			</table>
+		</div>
+	
 		<div id="home">
 			<h1>pac-man</h1>
 			<h3>Lucio PANEPINTO<br><em>2015</em></h3>
@@ -146,6 +178,7 @@
 				<canvas id="canvas-presentation-clyde"></canvas><div id="presentation-character-clyde">- pokey</div><div id="presentation-name-clyde">"clyde"</div>
 			</div>
 			<canvas id="trailer"></canvas>
+			<div class="help-button">- help -</div>
 		</div>
 	
 		<div id="panel">
@@ -175,6 +208,7 @@
 			<canvas id="canvas-lifes"></canvas>
 			<canvas id="canvas-level-fruits"></canvas>
 			<div id="message"></div>
+			<div class="help-button">- help -</div>
 		</div>
 	
 	</body>

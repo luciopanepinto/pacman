@@ -207,6 +207,65 @@ h3 {
 	font-style: normal;
 }
 
+.help-button { 
+	position: absolute;
+	text-align: center;
+	bottom: 0px;
+	right: 5px;
+	margin: auto;
+	font-size: 14px;
+	font-weight: bold;
+	text-transform: lowercase;
+	letter-spacing: 0.5px;
+	cursor: pointer;
+	color: #78abf7;
+	transition: color 1.5s;
+}
+.help-button.yo { 
+	color: #333;
+}
+#panel .help-button { 
+	top: 80px;
+}
+
+#help h2 { 
+	margin: 0px 0px 10px 0px;
+	color: #d43b3b;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 26px;
+}
+#help { 
+	position: absolute;
+	width: 420px;
+	height: 265px;
+	top: 290px;
+	left: 0px;
+	right: 0px;
+	margin: auto;
+	padding-top: 15px;
+	text-align: center;
+	z-index: 999999;
+	background-color: #222;
+	border: solid 1px #193fff;
+	text-transform: uppercase;
+	opacity: 0.9;
+	display: none;
+	cursor: pointer;
+}
+#help  table  tr  td { 
+	font-size: 16px;
+	letter-spacing: 1px;
+}
+#help  table  tr  td:first-child { 
+	color: #f4c030;
+	font-weight: bold;
+	text-align: right;
+}
+#help  table  tr  td:last-child { 
+	text-align: left;
+}
+
 .ui-mobile {
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
@@ -225,20 +284,30 @@ h3 {
 }
 
 @media screen and (max-width:1024px), screen and (min-device-width : 768px) and (max-device-width : 1024px) { 
+	#home .help-button, #panel .help-button { 
+		display: none;
+	}
 	#panel, #home { 
 		zoom: 105%;
 	}
 	#control { 
 		display: inline; 
 	} 
+
 }
 @media screen and (max-height:640px), screen and (min-device-height : 480px) and (max-device-height : 640px) and (-webkit-device-pixel-ratio: 3) { 
 	#panel, #home { 
-		zoom: 65%;
+		zoom: 60%;
 	}
 	#control { 
 		display: inline; 
 	} 
+	#home .help-button, #panel .help-button { 
+		display: none;
+	}
+	h1, #canvas-panel-title-pacman { 
+		visibility: hidden;
+	}
 }
 @media screen and (max-height:480px), screen and (min-device-height : 320px) and (max-device-height : 480px) { 
 	#panel, #home { 
@@ -247,7 +316,7 @@ h3 {
 	#control { 
 		display: inline; 
 	} 
-	h1, #canvas-panel-title-pacman, #control-up-second, #control-down-second { 
+	h1, #canvas-panel-title-pacman, #control-up-second, #control-down-second, #home .help-button, #panel .help-button { 
 		display: none;
 	}
 	#score, #highscore { 

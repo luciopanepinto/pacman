@@ -132,7 +132,7 @@ function movePacman(direction) {
 						
 			var speedUp = 0;
 			if (quarterChangeDirection) { 
-				speedUp = 8;
+				speedUp = 6;
 			}
 			
 			if ( PACMAN_DIRECTION === 1 ) { 
