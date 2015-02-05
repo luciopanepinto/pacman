@@ -63,6 +63,10 @@
 					}
 				});
 				
+				$(".github").click(function(e) { 
+					e.stopPropagation();
+				});
+				
 				initHome();
 				
 				$("#home").tap(function(e) { 
@@ -179,6 +183,7 @@
 			</div>
 			<canvas id="trailer"></canvas>
 			<div class="help-button">- help -</div>
+			<a class="github" target="_blank" href="https://github.com/luciopanepinto/pacman"><img src="img/github.png" alt="GitHub - Lucio PANEPINTO - Pac-Man"></a>
 		</div>
 	
 		<div id="panel">

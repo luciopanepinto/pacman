@@ -207,6 +207,12 @@ h3 {
 	font-style: normal;
 }
 
+.github { 
+	position: absolute;
+	bottom: 0px;
+	left: 5px;
+}
+
 .help-button { 
 	position: absolute;
 	text-align: center;
@@ -284,7 +290,7 @@ h3 {
 }
 
 @media screen and (max-width:1024px), screen and (min-device-width : 768px) and (max-device-width : 1024px) { 
-	#home .help-button, #panel .help-button { 
+	#home .help-button, #panel .help-button, #home .github { 
 		display: none;
 	}
 	#panel, #home { 
@@ -302,7 +308,7 @@ h3 {
 	#control { 
 		display: inline; 
 	} 
-	#home .help-button, #panel .help-button { 
+	#home .help-button, #panel .help-button, #home .github { 
 		display: none;
 	}
 	h1, #canvas-panel-title-pacman { 
@@ -316,7 +322,7 @@ h3 {
 	#control { 
 		display: inline; 
 	} 
-	h1, #canvas-panel-title-pacman, #control-up-second, #control-down-second, #home .help-button, #panel .help-button { 
+	h1, #canvas-panel-title-pacman, #control-up-second, #control-down-second, #home .help-button, #panel .help-button, #home .github { 
 		display: none;
 	}
 	#score, #highscore { 
