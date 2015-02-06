@@ -339,21 +339,21 @@ function drawMelon(ctx, x, y, size) {
 	ctx.fillStyle = "#198122";
 	ctx.beginPath();
 	ctx.moveTo(size / 2, size / 6);
-	ctx.arc(size / 2, size / 6, size / 1.15, 1.1, 2.5, false);
+	ctx.arc(size / 2, size / 6, size / 1.15, 1.1, 2.5, true);
 	ctx.fill();
 	ctx.closePath();
 
 	ctx.beginPath();
 	ctx.fillStyle = "#ACFB77";
 	ctx.moveTo(size / 2, size / 6);
-	ctx.arc(size / 2, size / 6, size / 1.3, 1.1, 2.5, false);
+	ctx.arc(size / 2, size / 6, size / 1.3, 1.1, 2.5, true);
 	ctx.fill();
 	ctx.closePath();
 
 	ctx.beginPath();
 	ctx.fillStyle = "#F92F2F";
 	ctx.moveTo(size / 2, size / 6);
-	ctx.arc(size / 2, size / 6, size / 1.7, 1.1, 2.5, false);
+	ctx.arc(size / 2, size / 6, size / 1.7, 1.1, 2.5, true);
 	ctx.fill();
 	ctx.closePath();
 
@@ -361,11 +361,11 @@ function drawMelon(ctx, x, y, size) {
 	ctx.beginPath();
 	ctx.fillStyle = "black";
 	ctx.moveTo(12 * mod, 9 * mod);
-	ctx.arc(12 * mod, 9 * mod, size / 12, 1.1, 2.5, false);
+	ctx.arc(12 * mod, 9 * mod, size / 12, 1.1, 2.5, true);
 	ctx.moveTo(13 * mod, 12 * mod);
-	ctx.arc(13 * mod, 12 * mod, size / 12, 1.1, 2.5, false);
+	ctx.arc(13 * mod, 12 * mod, size / 12, 1.1, 2.5, true);
 	ctx.moveTo(10.5 * mod, 12 * mod);
-	ctx.arc(10.5 * mod, 12 * mod, size / 12, 1.1, 2.5, false);
+	ctx.arc(10.5 * mod, 12 * mod, size / 12, 1.1, 2.5, true);
 	ctx.fill();
 	ctx.closePath();
 }
@@ -373,22 +373,22 @@ function drawApple(ctx, x, y, size) {
 
 	ctx.translate(x - (size / 2), y - (size / 2) - 2);
 	
-	ctx.fillStyle = "red";
+	ctx.fillStyle = "#ff0000";
 	ctx.beginPath();
-	ctx.arc(size / 2, size / 2 + size / 9, (size / 2.1), Math.PI * 2, -Math.PI * 2, false);
+	ctx.arc(size / 2, size / 2 + size / 9, (size / 2.1), Math.PI * 2, -Math.PI * 2, true);
 	ctx.fill();
 	ctx.closePath();
 
-	ctx.fillStyle = "red";
+	ctx.fillStyle = "#ff0000";
 	ctx.beginPath();
-	ctx.arc(9, size - 3, (size / 4.5), Math.PI * 2, -Math.PI * 2, false);
-	ctx.arc(size - 8, size - 3, (size / 4.5), Math.PI * 2, -Math.PI * 2, false);
+	ctx.arc(9, size - 3, (size / 4.5), Math.PI * 2, -Math.PI * 2, true);
+	ctx.arc(size - 8, size - 3, (size / 4.5), Math.PI * 2, -Math.PI * 2, true);
 	ctx.fill();
 	ctx.closePath();
 	
 	ctx.fillStyle = "black";
 	ctx.beginPath();
-	ctx.arc(size / 2, size / 6, (size / 7), Math.PI * 2, -Math.PI * 2, false);
+	ctx.arc(size / 2, size / 6, (size / 7), Math.PI * 2, -Math.PI * 2, true);
 	ctx.fill();
 	ctx.closePath();
 
@@ -425,13 +425,13 @@ function drawOrange(ctx, x, y, size) {
 
 	ctx.fillStyle = "#fcb424";
 	ctx.beginPath();
-	ctx.arc(size / 2, size / 2 + size / 9, (size / 2.2), Math.PI * 2, -Math.PI * 2, false);
+	ctx.arc(size / 2, size / 2 + size / 9, (size / 2.2), Math.PI * 2, -Math.PI * 2, true);
 	ctx.fill();
 	ctx.closePath();
 
 	ctx.fillStyle = "black";
 	ctx.beginPath();
-	ctx.arc(size / 2, size / 6, (size / 7), Math.PI * 2, -Math.PI * 2, false);
+	ctx.arc(size / 2, size / 6, (size / 7), Math.PI * 2, -Math.PI * 2, true);
 	ctx.fill();
 	ctx.closePath();
 
@@ -457,7 +457,7 @@ function drawStrawberry(ctx, x, y, size) {
 	ctx.translate(x - (size / 2), y - (size / 2) + 2);
 	
 	ctx.beginPath();
-	ctx.fillStyle = "red";
+	ctx.fillStyle = "#ff0000";
 
 	ctx.moveTo(size / 2, size - size / 18)
 	ctx.bezierCurveTo(0, size / 1.3, 0, -size / 9, size / 2, size / 6)
@@ -502,10 +502,10 @@ function drawCherry(ctx, x, y, size) {
 	ctx.translate(x - (size / 2), y - (size / 2) + 1);
 	
 	ctx.beginPath();
-	ctx.fillStyle = "red";
+	ctx.fillStyle = "#ff0000";
 
-	ctx.arc(size / 8, size - (size / 2.8), size / 4, Math.PI * 2, -Math.PI * 2, false);
-	ctx.arc(size - size / 3, size - (size / 4), size / 4, Math.PI * 2, -Math.PI * 2, false);
+	ctx.arc(size / 8, size - (size / 2.8), size / 4, Math.PI * 2, -Math.PI * 2, true);
+	ctx.arc(size - size / 3, size - (size / 4), size / 4, Math.PI * 2, -Math.PI * 2, true);
 
 	ctx.fill();
 	ctx.closePath();
@@ -513,8 +513,8 @@ function drawCherry(ctx, x, y, size) {
 	ctx.beginPath();
 	ctx.fillStyle = "#670303";
 
-	ctx.arc(size / 7.2, size - (size / 2.25), size / 14, Math.PI * 2, -Math.PI * 2, false);
-	ctx.arc(size - size / 3, size - (size / 3), size / 14, Math.PI * 2, -Math.PI * 2, false);
+	ctx.arc(size / 7.2, size - (size / 2.25), size / 14, Math.PI * 2, -Math.PI * 2, true);
+	ctx.arc(size - size / 3, size - (size / 3), size / 14, Math.PI * 2, -Math.PI * 2, true);
 
 	ctx.fill();
 	ctx.closePath();
