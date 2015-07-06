@@ -154,6 +154,9 @@ function drawGhost(ghost) {
 }
 
 function affraidGhosts() { 
+	
+	playWazaSound();
+	
 	SCORE_GHOST_COMBO = 200;
 
 	affraidGhost("blinky");
@@ -181,10 +184,31 @@ function cancelAffraidGhost(ghost) {
 		stopGhost(ghost);
 		eval('GHOST_' + ghost.toUpperCase() + '_STATE = 0');
 		moveGhost(ghost);
+		testStateGhosts();
+	}
+}
+function testStateGhosts() { 
+
+	if ( GHOST_BLINKY_STATE === 1 ||  
+		 GHOST_PINKY_STATE === 1 ||  
+		 GHOST_INKY_STATE === 1 ||  
+		 GHOST_CLYDE_STATE === 1 
+	) { 
+		playWazaSound();
+	} else if ( GHOST_BLINKY_STATE === -1 ||  
+		 GHOST_PINKY_STATE === -1 ||  
+		 GHOST_INKY_STATE === -1 ||  
+		 GHOST_CLYDE_STATE === -1 
+	) { 
+		playGhostEatenSound();		
+	} else { 
+		playSirenSound();
 	}
 }
 
 function startEatGhost(ghost) { 
+	playEatGhostSound();
+
 	LOCK = true;
 	
 	if ( eval('GHOST_' + ghost.toUpperCase() + '_AFFRAID_TIMER !== null') ) { 
@@ -202,6 +226,8 @@ function startEatGhost(ghost) {
 
 function eatGhost(ghost) { 
 
+	playGhostEatenSound();
+	
 	if (eval('GHOST_' + ghost.toUpperCase() + '_STATE === 1')) { 
 		$("#board span.combo").remove();
 		eval('GHOST_' + ghost.toUpperCase() + '_STATE = -1');
@@ -218,6 +244,7 @@ function cancelEatGhost(ghost) {
 		stopGhost(ghost);
 		eval('GHOST_' + ghost.toUpperCase() + '_STATE = 0');
 		moveGhost(ghost);
+		testStateGhosts();
 	}
 }
 

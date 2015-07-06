@@ -18,6 +18,7 @@
 	
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script type="text/javascript" src="js/jquery-mobile.js"></script>
+		<script type="text/javascript" src="js/jquery-buzz.js"></script>
 		
 		<script type="text/javascript" src="js/game.js"></script>
 		<script type="text/javascript" src="js/tools.js"></script>
@@ -28,6 +29,7 @@
 		<script type="text/javascript" src="js/pacman.js"></script>
 		<script type="text/javascript" src="js/ghosts.js"></script>
 		<script type="text/javascript" src="js/home.js"></script>
+		<script type="text/javascript" src="js/sound.js"></script>
 		
 		<script type="text/javascript">		
 			
@@ -44,8 +46,24 @@
 			
 			$(document).ready(function() { 
 				$.mobile.loading().hide();
+				loadAllSound();
 				
 				HELP_TIMER = setInterval('blinkHelp()', HELP_DELAY);
+				
+				$(".sound").click(function(e) { 
+					e.stopPropagation();
+					
+					var sound = $(this).attr("data-sound");
+					if ( sound === "on" ) { 
+						$(".sound").attr("data-sound", "off");
+						$(".sound").find("img").attr("src", "img/sound-off.png");
+						GROUP_SOUND.mute();
+					} else { 
+						$(".sound").attr("data-sound", "on");
+						$(".sound").find("img").attr("src", "img/sound-on.png");
+						GROUP_SOUND.unmute();
+					}
+				});
 				
 				$(".help-button, #help").click(function(e) { 
 					e.stopPropagation();
@@ -156,6 +174,8 @@
 		
 	<body>
 	
+		<div id="sound"></div>
+	
 		<div id="help">
 			<h2>Help</h2>
 			<table align="center" border="0" cellPadding="2" cellSpacing="0">
@@ -183,6 +203,7 @@
 			</div>
 			<canvas id="trailer"></canvas>
 			<div class="help-button">- help -</div>
+			<a class="sound" href="javascript:void(0);" data-sound="on"><img src="img/sound-on.png" alt="" border="0"></a>
 			<a class="github" target="_blank" href="https://github.com/luciopanepinto/pacman"><img src="img/github.png" alt="GitHub - Lucio PANEPINTO - Pac-Man"></a>
 		</div>
 	
@@ -214,6 +235,7 @@
 			<canvas id="canvas-level-fruits"></canvas>
 			<div id="message"></div>
 			<div class="help-button">- help -</div>
+			<a class="sound" href="javascript:void(0);" data-sound="on"><img src="img/sound-on.png" alt="" border="0"></a>
 		</div>
 	
 	</body>

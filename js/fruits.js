@@ -100,6 +100,8 @@ function getLevelFruitsCanevasContext() {
 }
 
 function eatFruit() { 
+	playEatFruitSound();
+	
 	var s = 0;
 	if (FRUIT === "cherry")  s = 100;
 	else if (FRUIT === "strawberry")  s = 300;

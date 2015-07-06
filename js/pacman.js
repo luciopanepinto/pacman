@@ -16,7 +16,8 @@ var PACMAN_EAT_GAP = 15;
 var PACMAN_GHOST_GAP = 20;
 var PACMAN_FRUITS_GAP = 15;
 var PACMAN_KILLING_TIMER = -1;
-var PACMAN_KILLING_SPEED = 100;
+var PACMAN_KILLING_SPEED = 70;
+var PACMAN_RETRY_SPEED = 2100;
 var PACMAN_DEAD = false;
 
 function initPacman() { 
@@ -246,6 +247,8 @@ function erasePacman() {
 }
 
 function killPacman() { 
+	playDieSound();
+
 	LOCK = true;
 	PACMAN_DEAD = true;
 	stopPacman();
@@ -265,7 +268,7 @@ function killingPacman() {
 		erasePacman();
 		if (LIFES > 0) { 
 			lifes(-1);
-			retry();
+			setTimeout('retry()', (PACMAN_RETRY_SPEED));
 		} else { 
 			gameover();
 		}
@@ -334,15 +337,19 @@ function testBubblesPacman() {
 				BUBBLES[testX + "," + testY] = b.substr(0, b.length - 1) + "1";
 				if (type === "s") { 
 					score(SCORE_SUPER_BUBBLE);
+					playEatPillSound();
 					affraidGhosts();
 				} else { 
 					score(SCORE_BUBBLE);
+					playEatingSound();
 				}
 				BUBBLES_COUNTER --;
 				if (BUBBLES_COUNTER === 0) { 
 					win();
 				}
 				return;
+			} else { 
+				stopEatingSound();
 			}
 		}
 	}

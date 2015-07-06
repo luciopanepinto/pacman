@@ -100,6 +100,8 @@ function initGame(newgame) {
 }
 
 function win() { 
+	stopAllSound();
+
 	LOCK = true;
 	stopPacman();
 	stopGhosts();
@@ -168,9 +170,12 @@ function ready() {
 	LOCK = true;
 	message("ready!");
 	
-	setTimeout("go()", "2000");
+	playReadySound();
+	setTimeout("go()", "4100");
 }
 function go() { 
+	playSirenSound();
+
 	LOCK = false;
 	
 	startTimes();
@@ -219,7 +224,9 @@ function stopTimes() {
 }
 
 function pauseGame() { 
+
 	if (!PAUSE) { 
+		stopAllSound();
 		PAUSE = true;
 		
 		message("pause");
@@ -232,6 +239,8 @@ function pauseGame() {
 }
 function resumeGame() { 
 	if (PAUSE) { 
+		testStateGhosts();
+
 		PAUSE = false;
 		
 		clearMessage();
@@ -245,6 +254,9 @@ function resumeGame() {
 
 function lifes(l) { 
 	if (l) { 
+		if ( l > 0 ) { 
+			playExtraLifeSound();
+		}
 		LIFES += l;
 	}
 	
