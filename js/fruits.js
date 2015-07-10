@@ -174,7 +174,7 @@ function drawFruit(ctx, f, x, y, size) {
 	else if ( f === "strawberry" ) drawStrawberry(ctx, x, y, size);
 	else if ( f === "orange" ) drawOrange(ctx, x, y, size);
 	else if ( f === "apple" ) drawApple(ctx, x, y, size);
-	else if ( f === "melon" ) drawMelon(ctx, x, y, size);
+	else if ( f === "melon" ) drawMelon(ctx, x, y + 7, size / 1.6);
 	else if ( f === "galboss" ) drawGalboss(ctx, x, y, size);
 	else if ( f === "bell" ) drawBell(ctx, x, y, size);
 	else if ( f === "key" ) drawKey(ctx, x, y, size);
