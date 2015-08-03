@@ -142,7 +142,7 @@ span.combo, span.fruits {
 	opacity: 0.7;
 	display: none;
 }
-#control-up, #control-down, #control-up-second, #control-down-second, #control-left, #control-right { 
+#control-up, #control-down, #control-up-second, #control-down-second, #control-left, #control-right, #control-up-big, #control-down-big, #control-left-big, #control-right-big { 
 	position: absolute;
 	margin: auto;
 	background-repeat: no-repeat;
@@ -184,6 +184,46 @@ span.combo, span.fruits {
 	top: 0px;
 	right: 0px;
 	background-image: url('../img/move-right.png');
+}
+
+#control-up-big, #control-down-big, #control-left-big, #control-right-big { 
+	position: absolute;
+	opacity: 0.2;
+	margin: auto;
+	padding: 0px;
+	display: none;
+}
+#control-up-big { 
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	width: 250px;
+	height: 150px;
+	background-image: url('../img/move-up-big.png');
+}
+#control-down-big { 
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	width: 250px;
+	height: 150px;
+	background-image: url('../img/move-down-big.png');
+}
+#control-left-big { 
+	left: 0px;
+	top: 0px;
+	bottom: 0px;
+	width: 150px;
+	height: 250px;
+	background-image: url('../img/move-left-big.png');
+}
+#control-right-big { 
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	width: 150px;
+	height: 250px;
+	background-image: url('../img/move-right-big.png');
 }
 
 
@@ -246,7 +286,8 @@ h3 {
 	color: #333;
 }
 #panel .help-button { 
-	top: 80px;
+	top: -510px;
+	height: 25px;
 }
 
 #help h2 { 
@@ -315,7 +356,7 @@ h3 {
 	#panel, #home { 
 		zoom: 105%;
 	}
-	#control { 
+	#control-up-big, #control-down-big, #control-left-big, #control-right-big { 
 		display: inline; 
 	} 
 
@@ -324,7 +365,7 @@ h3 {
 	#panel, #home { 
 		zoom: 60%;
 	}
-	#control { 
+	#control-up-big, #control-down-big, #control-left-big, #control-right-big { 
 		display: inline; 
 	} 
 	#home .help-button, #panel .help-button, #home .github, #sound, .sound { 
@@ -338,7 +379,7 @@ h3 {
 	#panel, #home { 
 		zoom: 55%;
 	}
-	#control { 
+	#control-up-big, #control-down-big, #control-left-big, #control-right-big { 
 		display: inline; 
 	} 
 	h1, #canvas-panel-title-pacman, #control-up-second, #control-down-second, #home .help-button, #panel .help-button, #home .github, #sound, .sound { 
