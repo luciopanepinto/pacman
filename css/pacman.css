@@ -120,6 +120,7 @@ span.combo, span.fruits {
 	height: 30px;
 	top: 670px;
 	position: absolute;
+	z-index: 111111;
 }
 #canvas-lifes { 
 	width: 120px;
@@ -193,6 +194,7 @@ span.combo, span.fruits {
 	padding: 0px;
 	display: none;
 	background-size: 98px;
+	z-index: 999999;
 }
 #control-up-big { 
 	bottom: 10px;
