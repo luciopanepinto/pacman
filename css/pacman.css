@@ -195,7 +195,7 @@ span.combo, span.fruits {
 	background-size: 98px;
 }
 #control-up-big { 
-	bottom: -50px;
+	bottom: 10px;
 	left: 0px;
 	right: 0px;
 	width: 125px;
@@ -203,7 +203,7 @@ span.combo, span.fruits {
 	background-image: url('../img/move-up-big.png');
 }
 #control-down-big { 
-	bottom: -180px;
+	bottom: -120px;
 	left: 0px;
 	right: 0px;
 	width: 125px;
@@ -212,14 +212,14 @@ span.combo, span.fruits {
 }
 #control-left-big { 
 	left: 80px;
-	bottom: -150px;
+	bottom: -90px;
 	width: 125px;
 	height: 175px;
 	background-image: url('../img/move-left-big.png');
 }
 #control-right-big { 
 	right: 80px;
-	bottom: -150px;
+	bottom: -90px;
 	width: 125px;
 	height: 175px;
 	background-image: url('../img/move-right-big.png');
