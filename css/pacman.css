@@ -192,37 +192,36 @@ span.combo, span.fruits {
 	margin: auto;
 	padding: 0px;
 	display: none;
+	background-size: 98px;
 }
 #control-up-big { 
-	top: 0px;
+	bottom: -50px;
 	left: 0px;
 	right: 0px;
-	width: 250px;
-	height: 150px;
+	width: 125px;
+	height: 125px;
 	background-image: url('../img/move-up-big.png');
 }
 #control-down-big { 
-	bottom: 0px;
+	bottom: -180px;
 	left: 0px;
 	right: 0px;
-	width: 250px;
-	height: 150px;
+	width: 125px;
+	height: 125px;
 	background-image: url('../img/move-down-big.png');
 }
 #control-left-big { 
-	left: 0px;
-	top: 0px;
-	bottom: 0px;
-	width: 150px;
-	height: 250px;
+	left: 80px;
+	bottom: -150px;
+	width: 125px;
+	height: 175px;
 	background-image: url('../img/move-left-big.png');
 }
 #control-right-big { 
-	right: 0px;
-	top: 0px;
-	bottom: 0px;
-	width: 150px;
-	height: 250px;
+	right: 80px;
+	bottom: -150px;
+	width: 125px;
+	height: 175px;
 	background-image: url('../img/move-right-big.png');
 }
 
