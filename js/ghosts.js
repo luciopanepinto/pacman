@@ -137,6 +137,7 @@ function drawGhosts() {
 	drawGhost("clyde");
 }
 function drawGhost(ghost) { 
+
 	var ctx = getGhostCanevasContext(ghost);
 	
 	if (eval('GHOST_' + ghost.toUpperCase() + '_STATE === 0')) { 
@@ -151,6 +152,8 @@ function drawGhost(ghost) {
 	eval('drawHelperGhost(ctx, GHOST_' + ghost.toUpperCase() + '_POSITION_X, GHOST_' + ghost.toUpperCase() + '_POSITION_Y, GHOST_' + ghost.toUpperCase() + '_DIRECTION, GHOST_' + ghost.toUpperCase() + '_BODY_STATE, GHOST_' + ghost.toUpperCase() + '_STATE, GHOST_' + ghost.toUpperCase() + '_AFFRAID_STATE)');
 	
 	ctx.closePath();
+	
+	
 }
 
 function affraidGhosts() { 
@@ -207,21 +210,24 @@ function testStateGhosts() {
 }
 
 function startEatGhost(ghost) { 
-	playEatGhostSound();
+	
+	if ( !LOCK ) { 
+		playEatGhostSound();
 
-	LOCK = true;
-	
-	if ( eval('GHOST_' + ghost.toUpperCase() + '_AFFRAID_TIMER !== null') ) { 
-		eval('GHOST_' + ghost.toUpperCase() + '_AFFRAID_TIMER.cancel()');
-		eval('GHOST_' + ghost.toUpperCase() + '_AFFRAID_TIMER = null');
+		LOCK = true;
+		
+		if ( eval('GHOST_' + ghost.toUpperCase() + '_AFFRAID_TIMER !== null') ) { 
+			eval('GHOST_' + ghost.toUpperCase() + '_AFFRAID_TIMER.cancel()');
+			eval('GHOST_' + ghost.toUpperCase() + '_AFFRAID_TIMER = null');
+		}
+		
+		score(SCORE_GHOST_COMBO, ghost);
+		
+		pauseGhosts();
+		pausePacman();
+		
+		setTimeout('eatGhost(\''+ ghost + '\')', 600);
 	}
-	
-	score(SCORE_GHOST_COMBO, ghost);
-	
-	pauseGhosts();
-	pausePacman();
-	
-	setTimeout('eatGhost(\''+ ghost + '\')', 600);
 }
 
 function eatGhost(ghost) { 
@@ -315,7 +321,9 @@ function moveGhost(ghost) {
 			drawGhost(ghost);
 			
 			if (eval('GHOST_' + ghost.toUpperCase() + '_BODY_STATE === 3') && eval('GHOST_' + ghost.toUpperCase() + '_STATE != -1')) { 
-				testGhostPacman(ghost);
+				if ( !PACMAN_MOVING ) { 
+					testGhostPacman(ghost);
+				}
 				testGhostTunnel(ghost);
 			}
 		} else { 
@@ -465,15 +473,7 @@ function eraseGhost(ghost) {
 
 	var ctx = getGhostCanevasContext(ghost);
 	
-	//ctx.save();
-	//ctx.globalCompositeOperation = "destination-out";
-	
-	//ctx.beginPath();
 	eval('ctx.clearRect(GHOST_' + ghost.toUpperCase() + '_POSITION_X - 17, GHOST_' + ghost.toUpperCase() + '_POSITION_Y - 17, 34, 34)');
-	//ctx.fill();
-	
-	//ctx.closePath();
-	//ctx.restore();
 }
 function eraseGhosts() { 
 

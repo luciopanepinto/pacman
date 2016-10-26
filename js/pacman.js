@@ -93,6 +93,7 @@ function movePacman(direction) {
 
 	if (PACMAN_MOVING === false) { 
 		PACMAN_MOVING = true;
+		drawPacman();
 		PACMAN_MOVING_TIMER = setInterval('movePacman()', PACMAN_MOVING_SPEED);
 	}
 	
@@ -304,53 +305,42 @@ function testFruitsPacman() {
 	}
 }
 function testBubblesPacman() { 
+	
+	var r = { x: PACMAN_POSITION_X - ( PACMAN_SIZE / 2 ), y: PACMAN_POSITION_Y - ( PACMAN_SIZE / 2 ) , width: ( PACMAN_SIZE * 2 ), height: ( PACMAN_SIZE * 2 ) };
 		
-	var i, imax;
-	if (PACMAN_DIRECTION === 3 || PACMAN_DIRECTION === 4) { 
-		i = -PACMAN_EAT_GAP;
-		imax = 0;
-	} else if (PACMAN_DIRECTION === 1 || PACMAN_DIRECTION === 2) { 
-		i = 0;
-		imax = PACMAN_EAT_GAP;
-	}
-	
-	
-	for ( ; i < imax; i ++ ) { 
-	
-		var testX = (PACMAN_POSITION_X);
-		var testY = (PACMAN_POSITION_Y);
-		if (PACMAN_DIRECTION === 3 || PACMAN_DIRECTION === 1) { 
-			testX += i;
-		} else if (PACMAN_DIRECTION === 4 || PACMAN_DIRECTION === 2) { 
-			testY += i;
-		}
-	
-		var b = BUBBLES[testX + "," + testY];
+	for (var i = 0, imax = BUBBLES_ARRAY.length; i < imax; i ++) { 
+		var bubble = BUBBLES_ARRAY[i];
 		
-		if (b) { 
-			var t = b.split(";");
-			var eat = t[3];
+		var bubbleParams = bubble.split( ";" );
+		var testX = parseInt(bubbleParams[0].split( "," )[0]);
+		var testY = parseInt(bubbleParams[0].split( "," )[1]);
+		var p = { x: testX, y: testY };
+		
+		if ( isPointInRect( p, r ) ) { 
 			
-			if (eat === "0") { 
-				var type = t[2];
-				eraseBubble(type, testX, testY);
-				BUBBLES[testX + "," + testY] = b.substr(0, b.length - 1) + "1";
-				if (type === "s") { 
-					score(SCORE_SUPER_BUBBLE);
+			if ( bubbleParams[4] === "0" ) { 
+				var type = bubbleParams[3];
+							
+				eraseBubble( type, testX, testY );
+				BUBBLES_ARRAY[i] = bubble.substr( 0, bubble.length - 1 ) + "1"
+				
+				if ( type === "s" ) { 
+					setSuperBubbleOnXY( testX, testY, "1" );
+					score( SCORE_SUPER_BUBBLE );
 					playEatPillSound();
 					affraidGhosts();
 				} else { 
-					score(SCORE_BUBBLE);
+					score( SCORE_BUBBLE );
 					playEatingSound();
 				}
 				BUBBLES_COUNTER --;
-				if (BUBBLES_COUNTER === 0) { 
+				if ( BUBBLES_COUNTER === 0 ) { 
 					win();
 				}
-				return;
 			} else { 
 				stopEatingSound();
 			}
+			return;
 		}
 	}
 }

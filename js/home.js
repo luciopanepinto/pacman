@@ -57,6 +57,7 @@ function initHome() {
 
 	$("#panel").hide();
 	$("#home").show();
+	$("#home h3 em").append( " - " + new Date().getFullYear() );
 	
 	$('#help').fadeOut("slow");
 	

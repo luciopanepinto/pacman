@@ -1,41 +1,31 @@
 var EATING_SOUND = new buzz.sound([
-    "./sound/eating.ogg",
     "./sound/eating.mp3" 
 ]);
 var GHOST_EATEN_SOUND = new buzz.sound([
-    "./sound/ghost-eaten.ogg", 
 	"./sound/ghost-eaten.mp3" 
 ]);
 var EXTRA_LIFE_SOUND = new buzz.sound([
-    "./sound/extra-life.ogg",
     "./sound/extra-life.mp3" 
 ]);
 var EAT_PILL_SOUND = new buzz.sound([
-    "./sound/eat-pill.ogg",
     "./sound/eat-pill.mp3" 
 ]);
 var EAT_FRUIT_SOUND = new buzz.sound([
-    "./sound/eat-fruit.ogg",
     "./sound/eat-fruit.mp3" 
 ]);
 var EAT_GHOST_SOUND = new buzz.sound([
-    "./sound/eat-ghost.ogg",
     "./sound/eat-ghost.mp3" 
 ]);
 var SIREN_SOUND = new buzz.sound([
-    "./sound/siren.ogg",
     "./sound/siren.mp3" 
 ]);
 var WAZA_SOUND = new buzz.sound([
-    "./sound/waza.ogg",
     "./sound/waza.mp3" 
 ]);
 var READY_SOUND = new buzz.sound([
-    "./sound/ready.ogg",
     "./sound/ready.mp3" 
 ]);
 var DIE_SOUND = new buzz.sound([
-    "./sound/die.ogg",
     "./sound/die.mp3" 
 ]);
 

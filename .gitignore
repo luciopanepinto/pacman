@@ -1,3 +1,11 @@
+# Firebase files
+.firebaserc
+firebase.json
+
+# Google files
+googlebffbfc06c66171db.html
+manifest.json
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db

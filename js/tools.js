@@ -1,3 +1,11 @@
+function isPointInRect(point, rect) { 
+	if (rect.width <= 0 || rect.height <= 0) { 
+		return false;
+	} else { 
+		return (point.x >= rect.x && point.x <= rect.x + rect.width && point.y >= rect.y && point.y <= rect.y + rect.height);
+	}
+}
+
 function Timer(callback, delay) {
     var id, started, remaining = delay, running
 

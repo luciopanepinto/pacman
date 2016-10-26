@@ -1,4 +1,4 @@
-var BUBBLES = [];
+var BUBBLES_ARRAY = new Array();
 var BUBBLES_CANVAS_CONTEXT = null;
 var BUBBLES_X_START = 30;
 var BUBBLES_X_END = 518;
@@ -13,10 +13,11 @@ var SUPER_BUBBLES_SIZE = 8;
 var SUPER_BUBBLES_BLINK = false;
 var SUPER_BUBBLES_BLINK_STATE = 0;
 var SUPER_BUBBLES_BLINK_TIMER = -1;
-var SUPER_BUBBLES_BLINK_SPEED = 300;
+var SUPER_BUBBLES_BLINK_SPEED = 525;
 
 function initBubbles() { 
 	BUBBLES_COUNTER = 0;
+	BUBBLES_ARRAY.length = 0;
 
 	var canvas = document.getElementById('canvas-bubbles');
 	canvas.setAttribute('width', '550');
@@ -31,6 +32,7 @@ function getBubblesCanevasContext() {
 }
 
 function drawBubbles() { 
+
 	var ctx = getBubblesCanevasContext();
 	ctx.fillStyle = "#dca5be";
 	
@@ -43,7 +45,7 @@ function drawBubbles() {
 				if (isSuperBubble(line, bubble)) { 
 					type = "s";
 					size = SUPER_BUBBLES_SIZE;
-					SUPER_BUBBLES[s] = line + ";" + bubble + ";" + correctionX(x, bubble) + "," + y;
+					SUPER_BUBBLES[s] = line + ";" + bubble + ";" + parseInt(correctionX(x, bubble)) + "," + parseInt(y) + ";0";
 					s ++;
 				} else { 
 					type = "b";
@@ -55,7 +57,7 @@ function drawBubbles() {
 				ctx.fill();
 				ctx.closePath();
 				
-				BUBBLES[parseInt(correctionX(x, bubble)) + "," + parseInt(y)] = line + ";" + bubble + ";" + type + ";0"
+				BUBBLES_ARRAY.push( parseInt(correctionX(x, bubble)) + "," + parseInt(y) + ";" + line + ";" + bubble + ";" + type + ";0" );
 				i ++;
 			}
 		}
@@ -69,6 +71,7 @@ function stopBlinkSuperBubbles() {
 }
 
 function blinkSuperBubbles() { 
+
 	if (SUPER_BUBBLES_BLINK === false) { 
 		SUPER_BUBBLES_BLINK = true;
 		SUPER_BUBBLES_BLINK_TIMER = setInterval('blinkSuperBubbles()', SUPER_BUBBLES_BLINK_SPEED);
@@ -80,16 +83,16 @@ function blinkSuperBubbles() {
 			SUPER_BUBBLES_BLINK_STATE = 0;
 		}
 		
-		for (var i = 0, imax = SUPER_BUBBLES.length; i < imax; i ++) { 
+		var clone = SUPER_BUBBLES.slice(0);
 		
-			var s = SUPER_BUBBLES[i];
-			var sx = parseInt(s.split(";")[2].split(",")[0]);
-			var sy = parseInt(s.split(";")[2].split(",")[1]);
+		for (var i = 0, imax = clone.length; i < imax; i ++) { 
 		
-			var b = BUBBLES[sx + "," + sy];
-			var eat = b.split(";")[3];
+			var s = clone[i];
+		
+			if ( s.split(";")[3] === "0" ) { 
 			
-			if (eat === "0") { 
+				var sx = parseInt(s.split(";")[2].split(",")[0]);
+				var sy = parseInt(s.split(";")[2].split(",")[1]);
 			
 				if (SUPER_BUBBLES_BLINK_STATE === 1) { 
 					eraseBubble("s", sx, sy);
@@ -105,6 +108,34 @@ function blinkSuperBubbles() {
 			}
 		}
 	}
+}
+
+function setSuperBubbleOnXY( x, y, eat ) { 
+
+	for (var i = 0, imax = SUPER_BUBBLES.length; i < imax; i ++) { 
+		var bubbleParams = SUPER_BUBBLES[i].split( ";" );
+		var testX = parseInt(bubbleParams[2].split( "," )[0]);
+		var testY = parseInt(bubbleParams[2].split( "," )[1]);
+		if ( testX === x && testY === y ) { 
+			SUPER_BUBBLES[i] = SUPER_BUBBLES[i].substr( 0, SUPER_BUBBLES[i].length - 1 ) + "1";
+			break;
+		}
+	}
+}
+
+function getBubbleOnXY( x, y ) { 
+
+	var bubble = null;
+	for (var i = 0, imax = BUBBLES_ARRAY.length; i < imax; i ++) { 
+		var bubbleParams = BUBBLES_ARRAY[i].split( ";" );
+		var testX = parseInt(bubbleParams[0].split( "," )[0]);
+		var testY = parseInt(bubbleParams[0].split( "," )[1]);
+		if ( testX === x && testY === y ) { 
+			bubble = BUBBLES_ARRAY[i];
+			break;
+		}
+	}
+	return bubble;
 }
 
 function eraseBubble(t, x, y) { 

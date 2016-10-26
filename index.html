@@ -4,8 +4,8 @@
 
 	<head>
 
-		<meta property="og:image" content="https://87060b9f4949ec52ecb6a75e0388be0b4d345dad.googledrive.com/host/0B4HFlS9vdbwFQlJvRFU2NDVYMlk/img/preview.png">
-		<meta property="og:url" content="https://87060b9f4949ec52ecb6a75e0388be0b4d345dad.googledrive.com/host/0B4HFlS9vdbwFQlJvRFU2NDVYMlk/">
+		<meta property="og:image" content="https://pacman-e281c.firebaseapp.com/img/preview.png">
+		<meta property="og:url" content="https://pacman-e281c.firebaseapp.com/">
 		<meta property="og:description" content="Pac-Man game written in HTML5 + CSS3 + jQuery with Canvas. This WebApp is a Responsive Web Design (RWD) website.">
 		<meta property="og:title" content="Lucio PANEPINTO - Pac-Man">
 		
@@ -17,7 +17,7 @@
 		<link rel="stylesheet" type="text/css" href="css/pacman-home.css" />
 	
 		<script type="text/javascript" src="js/jquery.js"></script>
-		<script type="text/javascript" src="js/jquery-mobile.js"></script>
+		<!--<script type="text/javascript" src="js/jquery-mobile.js"></script>-->
 		<script type="text/javascript" src="js/jquery-buzz.js"></script>
 		
 		<script type="text/javascript" src="js/game.js"></script>
@@ -45,10 +45,12 @@
 			}
 			
 			$(document).ready(function() { 
-				$.mobile.loading().hide();
+				//$.mobile.loading().hide();
 				loadAllSound();
 				
 				HELP_TIMER = setInterval('blinkHelp()', HELP_DELAY);
+				
+				initHome();
 				
 				$(".sound").click(function(e) { 
 					e.stopPropagation();
@@ -85,11 +87,11 @@
 					e.stopPropagation();
 				});
 				
-				initHome();
-				
-				$("#home").on("mousedown touchstart", function(e) { 
-					e.preventDefault();
-					simulateKeydown(13);
+				$("#home").on("click touchstart", function(e) { 
+					if ( $('#help').css("display") === "none") { 
+						e.preventDefault();
+						simulateKeydown(13);
+					}
 				});
 				$("#control-up, #control-up-second, #control-up-big").on("mousedown touchstart", function(e) { 
 					e.preventDefault();
