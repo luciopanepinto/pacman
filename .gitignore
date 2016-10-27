@@ -1,3 +1,7 @@
+# Git files
+.gitattributes
+.gitignore
+
 # Firebase files
 .firebaserc
 firebase.json
@@ -5,6 +9,7 @@ firebase.json
 # Google files
 googlebffbfc06c66171db.html
 manifest.json
+icon_128.png
 
 # Windows image file caches
 Thumbs.db
