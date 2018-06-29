@@ -4,6 +4,16 @@
 
 	<head>
 
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-121647007-2"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			
+			gtag('config', 'UA-121647007-2');
+		</script>
+	
 		<meta property="og:image" content="https://pacman-e281c.firebaseapp.com/img/preview.png">
 		<meta property="og:url" content="https://pacman-e281c.firebaseapp.com/">
 		<meta property="og:description" content="Pac-Man game written in HTML5 + CSS3 + jQuery with Canvas. This WebApp is a Responsive Web Design (RWD) website.">
@@ -83,7 +93,7 @@
 					}
 				});
 				
-				$(".github").click(function(e) { 
+				$(".github,.putchu").click(function(e) { 
 					e.stopPropagation();
 				});
 				
@@ -207,10 +217,12 @@
 			<div class="help-button">- help -</div>
 			<a class="sound" href="javascript:void(0);" data-sound="on"><img src="img/sound-on.png" alt="" border="0"></a>
 			<a class="github" target="_blank" href="https://github.com/luciopanepinto/pacman"><img src="img/github.png" alt="GitHub - Lucio PANEPINTO - Pac-Man"></a>
+			<a class="putchu" target="_top" href="http://www.putchu.be"><img src="http://www.putchu.be/img/intro/player.png" height="95px" alt="Putchu">www.putchu.be</a>
 		</div>
 	
 		<div id="panel">
 			<h1>pac-man</h1>
+			<a class="putchu" target="_top" href="http://www.putchu.be"><img src="http://www.putchu.be/img/intro/player.png" height="65px" alt="Putchu">www.putchu.be</a>
 			<canvas id="canvas-panel-title-pacman"></canvas>
 			<div id="score"><h2>1UP</h2><span>00</span></div>
 			<div id="highscore"><h2>High Score</h2><span>00</span></div>
